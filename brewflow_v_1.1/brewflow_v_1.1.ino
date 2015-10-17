@@ -84,7 +84,7 @@ float target_temp_3, target_temp_4;
 float temp_5, temp_6;
 float target_temp_5, target_temp_6;
 
-boolean mlthState, mlttState, hlthState, hlttState, pump1state, pump2State;
+boolean mlthState, mlttState, hlthState, hlttState, pump1state, pump2state;
 
 int mash = 0;
 String inputString = "";
@@ -99,6 +99,25 @@ void loop(void) {
   Opdater_Status(); 
  
 if (stringComplete){
+  
+  if (inputString.startsWith("9030", 0)){
+    bbuf = inputString.substring(4);
+    pump_2_speed = bbuf.toInt();
+    if (pump_2_speed > 100) {
+      pump_2_speed = 100;
+    }
+    if (pump_2_speed > 0) {
+    pump_2_speed = (pump_2_speed / 100) * 255;
+    analogWrite(pump_2, pump_2_speed);
+    pump2state = HIGH;
+    }
+    else {
+    analogWrite(pump_2, pump_2_speed);
+    pump2state = LOW;
+    }
+    
+  } 
+  
   if (inputString.startsWith("9020", 0)){
     bbuf = inputString.substring(4);
     pump_1_speed = bbuf.toInt();

@@ -23,7 +23,7 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.CYAN_SCHEME);
   G4P.setCursor(ARROW);
   if(frame != null)
-    frame.setTitle("sbp v1.0");
+    frame.setTitle("sbp v1.1");
 
   label1 = new GLabel(this, 445, 544, 50, 28);
   label1.setText("...");
@@ -81,12 +81,12 @@ public void createGUI(){
   //label10.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   //label10.setOpaque(true);
 
-  label11 = new GLabel(this, 370, 324, 75, 18);
+  label11 = new GLabel(this, 370, 324, 85, 18);
   label11.setText("...");
   label11.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label11.setOpaque(true);
   
-  label12 = new GLabel(this, 116, 324, 75, 18);
+  label12 = new GLabel(this, 116, 324, 85, 18);
   label12.setText("...");
   label12.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label12.setOpaque(true);

@@ -7,7 +7,7 @@
    ControlP5 cp5;
    Textlabel t;
    ControlTimer c, MashStep1Timer, MashStep2Timer, MashStep3Timer;
-   int MashInTemp = 59, MashStep1 = 50, MashStep2 = 66, MashStep3 = 72, MashOutTemp = 78, PumpSpeed = 0;  
+   int ManSetTemp = 70, MashInTemp = 59, MashStep1 = 50, MashStep2 = 66, MashStep3 = 72, MashOutTemp = 78, PumpSpeed1 = 0, PumpSpeed2 = 0;  
    int lf = 10, val;  
    int mashstep = 0;
 /*   =================================================================================       
@@ -56,8 +56,8 @@ void serialEvent(Serial myPort) {
       label6.setText(str(temp_2)+"°");        // pot 1 temp 2     
       label7.setText(str(temp_3)+"°");        // pot 1 temp 1
       label8.setText(str(temp_4)+"°");        // pot 1 temp 1
-      label11.setText(str(int(pump_1_speed))+" %"); //Pumpe 1 hastighed 
-      label12.setText(str(int(pump_2_speed))+" %"); //Pumpe 2 hastighed      
+      label11.setText("Pump1 "+str(int(pump_1_speed))+"%"); //Pumpe 1 hastighed 
+      label12.setText("Pump2 "+str(int(pump_2_speed))+"%"); //Pumpe 2 hastighed      
     break;
     }
   }

@@ -29,24 +29,24 @@
       rect(255,5,160,205);
       image(img,10,350,510,410);
 
-      t.setValue("00:00:00");
-      t.draw(this);
-      t.setPosition(200, 20);
-      t.setValue("00:00:00");
-      t.draw(this);
-      t.setPosition(200, 60);
-      t.setValue("00:00:00");
-      t.draw(this);
-      t.setPosition(200, 90);
-      t.setValue("00:00:00");
-      t.draw(this);
-      t.setPosition(200, 120);
-      t.setValue("00:00:00");
-      t.draw(this);
+      //t.setValue("");
+      //t.draw(this);
+     // t.setPosition(200, 20);
+     // t.setValue("00:00:00");
+     // t.draw(this);
+     // t.setPosition(200, 60);
+     // t.setValue("00:00:00");
+     // t.draw(this);
+     // t.setPosition(200, 90);
+     // t.setValue("00:00:00");
+     // t.draw(this);
+     // t.setPosition(200, 120);
+    //  t.setValue("00:00:00");
+     // t.draw(this);
       
-      t.setPosition(200, 160);
-      t.setValue(c.toString());
-      t.draw(this);
+    t.setPosition(200, 160);
+     t.setValue(c.toString());
+     t.draw(this);
 
    
  }

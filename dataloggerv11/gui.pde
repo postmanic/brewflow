@@ -23,49 +23,49 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.CYAN_SCHEME);
   G4P.setCursor(ARROW);
   if(frame != null)
-    frame.setTitle("sbp v1.1");
+    frame.setTitle("sbp v1.3");
 
-  label1 = new GLabel(this, 445, 544, 50, 28);
+  label1 = new GLabel(this, 590, 544, 50, 28);
   label1.setText("...");
   label1.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label1.setOpaque(true);
 
-  label2 = new GLabel(this, 191, 544, 50, 28);
+  label2 = new GLabel(this, 340, 544, 50, 28);
   label2.setText("...");
   label2.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label2.setOpaque(true);
   
-  label3 = new GLabel(this, 360, 440, 70, 28);
+  label3 = new GLabel(this, 510, 440, 70, 28);
   label3.setText("...");
   label3.setTextBold();
   label3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label3.setOpaque(true);
 
-  label6 = new GLabel(this, 360, 470, 70, 28);
+  label6 = new GLabel(this, 510, 470, 70, 28);
   label6.setText("...");
   label6.setTextBold();
   label6.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label6.setOpaque(true);
   
-  label4 = new GLabel(this, 106, 635, 70, 28);
+  label4 = new GLabel(this, 256, 635, 70, 28);
   label4.setText("...");
   label4.setTextBold();
   label4.setLocalColorScheme(GCScheme.RED_SCHEME);
   label4.setOpaque(true);
   
-  label5 = new GLabel(this, 360, 635, 70, 28);
+  label5 = new GLabel(this, 510, 635, 70, 28);
   label5.setText("...");
   label5.setTextBold();
   label5.setLocalColorScheme(GCScheme.RED_SCHEME);
   label5.setOpaque(true);
   
-  label7 = new GLabel(this, 106, 440, 70, 28);
+  label7 = new GLabel(this, 256, 440, 70, 28);
   label7.setText("...");
   label7.setTextBold();
   label7.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label7.setOpaque(true);
 
-  label8 = new GLabel(this, 106, 470, 70, 28);
+  label8 = new GLabel(this, 256, 470, 70, 28);
   label8.setText("...");
   label8.setTextBold();
   label8.setLocalColorScheme(GCScheme.BLUE_SCHEME);
@@ -81,17 +81,17 @@ public void createGUI(){
   //label10.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   //label10.setOpaque(true);
 
-  label11 = new GLabel(this, 370, 324, 85, 18);
+  label11 = new GLabel(this, 520, 324, 85, 18);
   label11.setText("...");
   label11.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label11.setOpaque(true);
   
-  label12 = new GLabel(this, 116, 324, 85, 18);
+  label12 = new GLabel(this, 256, 324, 85, 18);
   label12.setText("...");
   label12.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label12.setOpaque(true);
 
-  label13 = new GLabel(this, 258, 189, 155, 18);
+  label13 = new GLabel(this,10, 270, 385, 36);
   label13.setText("Waiting");
   label13.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label13.setOpaque(true);

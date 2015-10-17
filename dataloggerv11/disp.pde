@@ -8,7 +8,7 @@ public void VisKnapper(){
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 
   cp5.addSlider("MashInTemp")
-     .setPosition(20,10)
+     .setPosition(20,60)
      .setCaptionLabel("Mash In")
      .setSize(150,30)
      .setRange(10,90)
@@ -18,7 +18,7 @@ public void VisKnapper(){
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 
   cp5.addSlider("MashStep1")
-     .setPosition(20,49)
+     .setPosition(20,99)
      .setCaptionLabel("Mash Step 1")
      .setSize(150,30)
      .setRange(40,90)
@@ -27,7 +27,7 @@ public void VisKnapper(){
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 
   cp5.addSlider("MashStep2")
-     .setPosition(20,80)
+     .setPosition(20,130)
      .setCaptionLabel("Mash Step 2")
      .setSize(150,30)
      .setRange(40,90)
@@ -36,7 +36,7 @@ public void VisKnapper(){
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 
   cp5.addSlider("MashStep3")
-     .setPosition(20,111)
+     .setPosition(20,161)
      .setCaptionLabel("Mash Step 3")
      .setSize(150,30)
      .setRange(40,90)
@@ -47,7 +47,7 @@ public void VisKnapper(){
   // to variable 'sliderValue' 
 
   cp5.addSlider("MashOutTemp")
-     .setPosition(20,150)
+     .setPosition(20,200)
      .setCaptionLabel("Mash Out")
      .setSize(150,30)
      .setRange(40,90)
@@ -55,7 +55,7 @@ public void VisKnapper(){
      ;
      
   cp5.addSlider("ManSetTemp")
-     .setPosition(260,120)
+     .setPosition(410,160)
      .setCaptionLabel("Set Temp MLT")
      .setSize(150,30)
      .setRange(40,90)
@@ -63,7 +63,7 @@ public void VisKnapper(){
      ;
 
   cp5.addSlider("PumpSpeed1")
-     .setPosition(260,10)
+     .setPosition(410,50)
      .setCaptionLabel("Pump 1")
      .setSize(150,30)
      .setRange(0,100)
@@ -71,7 +71,7 @@ public void VisKnapper(){
      ; 
 
   cp5.addSlider("PumpSpeed2")
-     .setPosition(260,65)
+     .setPosition(410,105)
      .setCaptionLabel("Pump 2")
      .setSize(150,30)
      .setRange(0,100)
@@ -80,7 +80,7 @@ public void VisKnapper(){
  
   cp5.addButton("ReadyReceived")
      .setValue(0)
-     .setPosition(20,185)
+     .setPosition(20,235)
      .setCaptionLabel("GO")
      .setSize(40,20)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -89,7 +89,7 @@ public void VisKnapper(){
   // create a new button with name 'buttonA'
   cp5.addButton("StartPump1")
      .setValue(0)
-     .setPosition(260,45)
+     .setPosition(410,85)
      .setCaptionLabel("Run")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -98,7 +98,7 @@ public void VisKnapper(){
   // create a new button with name 'buttonA'
   cp5.addButton("StopPump1")
      .setValue(0)
-     .setPosition(305,45)
+     .setPosition(454,85)
      .setCaptionLabel("Stop")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -106,7 +106,7 @@ public void VisKnapper(){
 
   cp5.addButton("StartPump2")
      .setValue(0)
-     .setPosition(260,100)
+     .setPosition(410,140)
      .setCaptionLabel("Run")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -115,7 +115,7 @@ public void VisKnapper(){
   // create a new button with name 'buttonA'
   cp5.addButton("StopPump2")
      .setValue(0)
-     .setPosition(305,100)
+     .setPosition(454,140)
      .setCaptionLabel("Stop")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)

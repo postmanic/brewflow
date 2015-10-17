@@ -1,25 +1,10 @@
 /*
   BrewFlow
 
-  modified 16 october 2015
   by Lars Rosenskjold Jacobsen
   
-  Opbygges sådan at styringen er generisk.
+  PID author: E. vd Logt.
   
-  Gryde 1
-  1 x heat PID (pin 9)
-  2 x temp (pin 3)
-  2 x pumpe PWM (pin 5, 6)
-  
-  Gryde 2
-  1 x heat PID (pin 10)
-  2 x temp (pin 3)
-  1 x pumpe PWM (pin 11)
-  
-  Gryde 3
-  2 x temp (pin 3)
-  
-  PWM PIN 3,5,6,9,10,11
   
  */
 

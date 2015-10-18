@@ -23,73 +23,152 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.CYAN_SCHEME);
   G4P.setCursor(ARROW);
   if(frame != null)
-    frame.setTitle("sbp v1.3");
+    frame.setTitle("brewflow v1.1");
 
-  label1 = new GLabel(this, 590, 544, 50, 28);
+  label1 = new GLabel(this, 536, 480, 60, 18);
   label1.setText("...");
   label1.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label1.setOpaque(true);
 
-  label2 = new GLabel(this, 340, 544, 50, 28);
+  // Target HLT
+  label2 = new GLabel(this, 286, 480, 60, 18);
   label2.setText("...");
   label2.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label2.setOpaque(true);
   
-  label3 = new GLabel(this, 510, 440, 70, 28);
+  // Target HLT
+  label14 = new GLabel(this, 213, 480, 71, 18);
+  label14.setText("SET TEMP");
+  //label14.setLocalColorScheme(GCScheme.BLACK_SCHEME);
+  label14.setOpaque(true);
+  
+  // Temp 1 MLT
+  label3 = new GLabel(this, 536, 440, 60, 18);
   label3.setText("...");
   label3.setTextBold();
   label3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label3.setOpaque(true);
-
-  label6 = new GLabel(this, 510, 470, 70, 28);
+  
+  // Temp 1 MLT
+  label18 = new GLabel(this, 463, 440, 71, 18);
+  label18.setText("TEMP 1");
+  //label16.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label18.setOpaque(true);   
+  
+  
+  // Temp 2 MLT
+  label6 = new GLabel(this, 536, 460, 60, 18);
   label6.setText("...");
   label6.setTextBold();
   label6.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label6.setOpaque(true);
   
-  label4 = new GLabel(this, 256, 635, 70, 28);
+  // Temp 2 MLT
+  label17 = new GLabel(this, 463, 460, 71, 18);
+  label17.setText("TEMP 2");
+  //label16.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label17.setOpaque(true); 
+
+  // Target MLT
+  label19 = new GLabel(this, 463, 480, 71, 18);
+  label19.setText("SET TEMP");
+  //label14.setLocalColorScheme(GCScheme.BLACK_SCHEME);
+  label19.setOpaque(true);
+
+
+  
+  // Heater HLT
+  label4 = new GLabel(this, 286, 625, 60, 18);
   label4.setText("...");
   label4.setTextBold();
   label4.setLocalColorScheme(GCScheme.RED_SCHEME);
   label4.setOpaque(true);
+ 
+   // Heater HLT
+  label23 = new GLabel(this, 213, 625, 71, 18);
+  label23.setText("HEATER");
+  //label23.setTextBold();
+  //label23.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label23.setOpaque(true);
+ 
   
-  label5 = new GLabel(this, 510, 635, 70, 28);
+  // Heater MLT
+  label5 = new GLabel(this, 536, 625, 60, 18);
   label5.setText("...");
   label5.setTextBold();
   label5.setLocalColorScheme(GCScheme.RED_SCHEME);
   label5.setOpaque(true);
+ 
+  // Heater MLT
+  label22 = new GLabel(this, 463, 625, 71, 18);
+  label22.setText("HEATER");
+  //label5.setTextBold();
+  //label5.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label22.setOpaque(true);
+ 
   
-  label7 = new GLabel(this, 256, 440, 70, 28);
+  
+  // Temp 1 HLT
+  label7 = new GLabel(this, 286, 440, 60, 18);
   label7.setText("...");
   label7.setTextBold();
   label7.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label7.setOpaque(true);
-
-  label8 = new GLabel(this, 256, 470, 70, 28);
+  
+  // Temp 1 HLT
+  label15 = new GLabel(this, 213, 440, 71, 18);
+  label15.setText("TEMP 1");
+  //label15.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label15.setOpaque(true); 
+  
+  // Temp 2 HLT
+  label8 = new GLabel(this, 286, 460, 60, 18);
   label8.setText("...");
   label8.setTextBold();
   label8.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  label8.setOpaque(true);  
+  label8.setOpaque(true);
   
-  //label9 = new GLabel(this, 378, 189, 35, 18);
-  //label9.setText("...");
-  //label9.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  //label9.setOpaque(true);
+  // Temp 2 HLT
+  label16 = new GLabel(this, 213, 460, 71, 18);
+  label16.setText("TEMP 2");
+  //label16.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label16.setOpaque(true); 
+  
+  label9 = new GLabel(this, 15, 10, 120, 18);
+  label9.setText("AUTOMASH");
+  //label9.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label9.setOpaque(true);
 
-  //label10 = new GLabel(this, 60, 264, 35, 18);
-  //label10.setText("Target");
-  //label10.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  //label10.setOpaque(true);
+  label10 = new GLabel(this, 410, 10, 120, 18);
+  label10.setText("SYSTEM CONTROL");
+  //label10.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label10.setOpaque(true);
 
-  label11 = new GLabel(this, 520, 324, 85, 18);
+
+  // Pump 2
+  label11 = new GLabel(this, 536, 604, 60, 18);
   label11.setText("...");
-  label11.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  label11.setLocalColorScheme(GCScheme.RED_SCHEME);
   label11.setOpaque(true);
   
-  label12 = new GLabel(this, 256, 324, 85, 18);
+  
+  // Pump 1
+  label12 = new GLabel(this, 286, 604, 60, 18);
   label12.setText("...");
-  label12.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  label12.setLocalColorScheme(GCScheme.RED_SCHEME);
   label12.setOpaque(true);
+  
+  // Pump 1
+  label20 = new GLabel(this, 213, 604, 71, 18);
+  label20.setText("PUMP");
+  //label20.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label20.setOpaque(true);
+  
+  // Pump 2
+  label21 = new GLabel(this, 463, 604, 71, 18);
+  label21.setText("PUMP");
+  //label20.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label21.setOpaque(true);
 
   label13 = new GLabel(this,10, 270, 385, 36);
   label13.setText("Waiting");
@@ -125,6 +204,16 @@ GLabel label10;
 GLabel label11; 
 GLabel label12; 
 GLabel label13; 
+GLabel label14; 
+GLabel label15; 
+GLabel label16; 
+GLabel label17; 
+GLabel label18; 
+GLabel label19;
+GLabel label20;
+GLabel label21;
+GLabel label22;
+GLabel label23;
 GToggleGroup togGroup1; 
 GToggleGroup togGroup2; 
 GOption option1; 

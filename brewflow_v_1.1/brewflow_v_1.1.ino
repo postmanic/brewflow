@@ -14,9 +14,11 @@
 // Hardware setup
 
 #define One_Wire_Bus (3)  // Thermometers.
-#define pump_1 (5)        // Pumpe 1 PWM output.
-#define pump_2 (6)        // Pumpe 2 PWM output.
-#define pump_3 (11)       // Pumpe 3 PWM output.
+
+int pump[] = {5,6,11};
+boolean pumpstate[] = {LOW,LOW,LOW};
+int pumpspeed[] = {0,0,0};
+
 #define heat_1 (9)        // MLT heater [mlth].
 #define heat_2 (10)       // HLT heater [hlth].
 
@@ -24,9 +26,6 @@
 #define pump_2_ctrl (7)   // Pump 2 control output.
 #define pump_3_ctrl (8)   // Pump 3 control output.
 
-double pump_1_speed;
-double pump_2_speed;
-double pump_3_speed;
 double heat_1_speed;
 double heat_2_speed;
 
@@ -69,11 +68,12 @@ float target_temp_3, target_temp_4;
 float temp_5, temp_6;
 float target_temp_5, target_temp_6;
 
-boolean mlthState, mlttState, hlthState, hlttState, pump1state, pump2state;
+boolean mlthState, mlttState, hlthState, hlttState;
 
 int mash = 0;
 String inputString = "";
 String bbuf = "";
+String cbuf = "";
 boolean stringComplete = false;
 long lastupdatestat;
 
@@ -84,42 +84,12 @@ void loop(void) {
   Opdater_Status(); 
  
 if (stringComplete){
+
+  cbuf = inputString.substring(0,4);
+  bbuf = inputString.substring(4);
   
-  if (inputString.startsWith("9030", 0)){
-    bbuf = inputString.substring(4);
-    pump_2_speed = bbuf.toInt();
-    if (pump_2_speed > 100) {
-      pump_2_speed = 100;
-    }
-    if (pump_2_speed > 0) {
-    pump_2_speed = (pump_2_speed / 100) * 255;
-    analogWrite(pump_2, pump_2_speed);
-    pump2state = HIGH;
-    }
-    else {
-    analogWrite(pump_2, pump_2_speed);
-    pump2state = LOW;
-    }
-    
-  } 
-  
-  if (inputString.startsWith("9020", 0)){
-    bbuf = inputString.substring(4);
-    pump_1_speed = bbuf.toInt();
-    if (pump_1_speed > 100) {
-      pump_1_speed = 100;
-    }
-    if (pump_1_speed > 0) {
-    pump_1_speed = (pump_1_speed / 100) * 255;
-    analogWrite(pump_1, pump_1_speed);
-    pump1state = HIGH;
-    }
-    else {
-    analogWrite(pump_1, pump_1_speed);
-    pump1state = LOW;
-    }
-    
-  }
+  Serial.println(cbuf+" / "+bbuf);
+   
   if (inputString.startsWith("9010", 0)){
     bbuf = inputString.substring(4);
     mash = bbuf.toInt();
@@ -127,7 +97,26 @@ if (stringComplete){
     target_temp_1 = mash;
   
   }  
- 						
+  
+   if (inputString.startsWith("9020", 0)){
+      pumpset(0, bbuf.toInt());
+   }  
+   if (inputString.startsWith("9030", 0)){
+      pumpset(1, bbuf.toInt());
+   }   
+   
+   if (inputString.startsWith("9040", 0)){
+      pumpset(2, bbuf.toInt());
+   }   
+  
+  
+  if (inputString.startsWith("9050", 0)){
+    bbuf = inputString.substring(4);
+    mash = bbuf.toInt();
+    vrg = 1;
+    target_temp_1 = mash;
+  
+  }   						
   inputString = "";
   stringComplete = false;
 }

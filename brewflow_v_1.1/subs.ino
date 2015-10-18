@@ -3,7 +3,7 @@ void Aflaes_Temperaturer(){
  
   temp_1 = sensors.getTempCByIndex(0);
   delay(2);
-  temp_2 = sensors.getTempCByIndex(1); 
+  temp_3 = sensors.getTempCByIndex(1); 
   delay(2);
   //temp_3 = sensors.getTempCByIndex(2);
   delay(2);

@@ -89,11 +89,11 @@ void serialEvent(Serial myPort) {
       //float pump_3_speed = (float(myArray[17])/255)*100;
       label2.setText(str(target_temp_1)+"°"); // pot 1 temp 1
       label1.setText(str(target_temp_2)+"°"); // pot 1 temp 1
-      label3.setText(str(temp_1)+"°");        // pot 1 temp 1
+      label3.setText(str(temp_3)+"°");        // pot 1 temp 1
       label4.setText(str(heat_1)+" W");   //HLT heater
       label5.setText(str(heat_2)+" W");   //MLT heater
       label6.setText(str(temp_2)+"°");        // pot 1 temp 2     
-      label7.setText(str(temp_3)+"°");        // pot 1 temp 1
+      label7.setText(str(temp_1)+"°");        // pot 1 temp 1
       label8.setText(str(temp_4)+"°");        // pot 1 temp 1
       label11.setText(str(int(pump_1_speed))+"%"); //Pumpe 1 hastighed 
       label12.setText(str(int(pump_2_speed))+"%"); //Pumpe 2 hastighed      

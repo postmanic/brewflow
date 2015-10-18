@@ -8,17 +8,16 @@ public void VisKnapper(){
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 
   cp5.addSlider("MashInTemp")
-     .setPosition(15,60)
+     .setPosition(15,50)
      .setCaptionLabel("Mash In")
      .setSize(150,30)
      .setRange(10,90)
      .setSliderMode(Slider.FLEXIBLE)
      ;
 
-  // add a horizontal sliders, the value of this slider will be linked
-  // to variable 'sliderValue' 
+  
   cp5.addSlider("MashStep1")
-     .setPosition(15,99)
+     .setPosition(15,89)
      .setCaptionLabel("Mash Step 1")
      .setSize(150,30)
      .setRange(40,90)
@@ -27,7 +26,7 @@ public void VisKnapper(){
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 
   cp5.addSlider("MashStep2")
-     .setPosition(15,130)
+     .setPosition(15,120)
      .setCaptionLabel("Mash Step 2")
      .setSize(150,30)
      .setRange(40,90)
@@ -36,7 +35,7 @@ public void VisKnapper(){
   // add a horizontal sliders, the value of this slider will be linked
   // to variable 'sliderValue' 
   cp5.addSlider("MashStep3")
-     .setPosition(15,161)
+     .setPosition(15,151)
      .setCaptionLabel("Mash Step 3")
      .setSize(150,30)
      .setRange(40,90)
@@ -47,7 +46,7 @@ public void VisKnapper(){
   // to variable 'sliderValue' 
 
   cp5.addSlider("MashOutTemp")
-     .setPosition(15,200)
+     .setPosition(15,190)
      .setCaptionLabel("Mash Out")
      .setSize(150,30)
      .setRange(40,90)
@@ -67,7 +66,7 @@ public void VisKnapper(){
      .setPosition(610,50)
      .setCaptionLabel("Set Temp HLT")
      .setSize(150,30)
-     .setRange(40,90)
+     .setRange(20,90)
      .setSliderMode(Slider.FLEXIBLE)
      ;
 
@@ -81,7 +80,7 @@ public void VisKnapper(){
 
   cp5.addSlider("PumpSpeed1")
      .setPosition(410,50)
-     .setCaptionLabel("Pump 1")
+     .setCaptionLabel("Pump HLT")
      .setSize(150,30)
      .setRange(0,100)
      .setSliderMode(Slider.FLEXIBLE)
@@ -89,7 +88,7 @@ public void VisKnapper(){
 
   cp5.addSlider("PumpSpeed2")
      .setPosition(410,105)
-     .setCaptionLabel("Pump 2")
+     .setCaptionLabel("Pump MLT")
      .setSize(150,30)
      .setRange(0,100)
      .setSliderMode(Slider.FLEXIBLE)
@@ -97,7 +96,7 @@ public void VisKnapper(){
 
   cp5.addSlider("PumpSpeed3")
      .setPosition(410,160)
-     .setCaptionLabel("Pump 3")
+     .setCaptionLabel("Pump HERMS")
      .setSize(150,30)
      .setRange(0,100)
      .setSliderMode(Slider.FLEXIBLE)
@@ -105,7 +104,7 @@ public void VisKnapper(){
  
   cp5.addButton("ReadyReceived")
      .setValue(0)
-     .setPosition(15,235)
+     .setPosition(15,225)
      .setCaptionLabel("GO")
      .setSize(40,20)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -360,7 +359,7 @@ String HLTtemp = str((int)HLTSetTemp);
 }
 
 void StopHLTTemp() {
-String MLTtemp = str((int)MLTSetTemp);
+String HLTtemp = str((int)HLTSetTemp);
   myPort.write("9060");
   myPort.write(0);
   myPort.write(lf);

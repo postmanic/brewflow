@@ -17,18 +17,18 @@ void init_pid_2() {
 void update_pid_2() {
   double v2ek;
   double v2lpf;
-  v2ek = target_temp_2 - temp_2;
+  v2ek = target_temp_2 - temp_3;
   if (vrg2){
-    v2pp = v2kc * (v2xk_1 - temp_2);
+    v2pp = v2kc * (v2xk_1 - temp_3);
     v2pi = v2k0 * v2ek;
-    v2pd = v2k1 * (2.0 * v2xk_1 - temp_2 - v2xk_2);
+    v2pd = v2k1 * (2.0 * v2xk_1 - temp_3 - v2xk_2);
     heat_2_speed += v2pp + v2pi + v2pd;
   }
   else { 
     heat_2_speed = v2pp = v2pi = v2pd = 0.0; 
   }
   v2xk_2 = v2xk_1;
-  v2xk_1 = temp_2;
+  v2xk_1 = temp_3;
   if (heat_2_speed > GMA_HLIM) {
     heat_2_speed = GMA_HLIM;
   }

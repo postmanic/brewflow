@@ -3,7 +3,7 @@ void Aflaes_Temperaturer(){
  
   temp_1 = sensors.getTempCByIndex(0);
   delay(2);
-  temp_2 = sensors.getTempCByIndex(1); 
+  temp_3 = sensors.getTempCByIndex(1); 
   delay(2);
   //temp_3 = sensors.getTempCByIndex(2);
   delay(2);
@@ -15,10 +15,34 @@ void Aflaes_Temperaturer(){
   delay(2);
 }
 
+void pumpset(int wpump, int wspeed){
+  
+    if (wspeed > 100) {
+      wspeed = 100;
+    }
+    if (wspeed > 0) {
+      
+    pumpspeed[wpump] = wspeed * 255 / 100;
+
+    //Serial.println(test);
+    
+    analogWrite(pump[wpump], wspeed);
+    pumpstate[wpump] = HIGH;
+    }
+    else {
+    analogWrite(pump[wpump], 0);
+    pumpspeed[wpump] = 0;
+    pumpstate[wpump] = LOW;
+    } 
+}
+
+
+
+
 void Opdater_Status(){
   if (millis() >= (lastupdatestat + 900)){
     lastupdatestat =  millis();
-    int nop[] = {21, temp_1*10, temp_2*10, temp_3*10, temp_4*10, temp_5*10, temp_6*10, target_temp_1, target_temp_2, target_temp_3*10, target_temp_4*10, target_temp_5*10, target_temp_6*10, heat_1_speed, heat_2_speed, pump_1_speed, pump_2_speed, pump_3_speed, mlttState, hlttState, millis()/1000};
+    int nop[] = {23, temp_1*10, temp_2*10, temp_3*10, temp_4*10, temp_5*10, temp_6*10, target_temp_1, target_temp_2, target_temp_3*10, target_temp_4*10, target_temp_5*10, target_temp_6*10, heat_1_speed, heat_2_speed, pumpspeed[0], pumpspeed[1], pumpspeed[2], mlttState, hlttState, vrg1, vrg2, millis()/1000};
     SendData(1010, nop);
   }	
 }

@@ -333,7 +333,6 @@ String pump2Speed = str((int)0);
   myPort.write("9030");
   myPort.write(pump2Speed);
   myPort.write(lf);
- 
 }
 
 void StartPump3() {
@@ -352,11 +351,37 @@ String pump3Speed = str((int)0);
  
 }
 
+void SetHLTTemp() {
+String HLTtemp = str((int)HLTSetTemp);
+  myPort.write("9050");
+  myPort.write(HLTtemp);
+  myPort.write(lf);
+
+}
+
+void StopHLTTemp() {
+String MLTtemp = str((int)MLTSetTemp);
+  myPort.write("9060");
+  myPort.write(0);
+  myPort.write(lf);
+
+}
+
+
 void SetMLTTemp() {
 String MLTtemp = str((int)MLTSetTemp);
-  myPort.write("9050");
+  myPort.write("9070");
   myPort.write(MLTtemp);
   myPort.write(lf);
 
 }
+
+void StopMLTTemp() {
+String MLTtemp = str((int)MLTSetTemp);
+  myPort.write("9080");
+  myPort.write(0);
+  myPort.write(lf);
+
+}
+
 

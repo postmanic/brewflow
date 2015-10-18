@@ -1,5 +1,6 @@
 void setup() { 
-  init_pid();
+  init_pid_1();
+  init_pid_2();
   sensors.begin();
   delay(2);
 

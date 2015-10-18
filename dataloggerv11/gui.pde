@@ -146,29 +146,27 @@ public void createGUI(){
 
 
   // Pump 2
-  label11 = new GLabel(this, 536, 604, 60, 18);
-  label11.setText("...");
-  label11.setLocalColorScheme(GCScheme.RED_SCHEME);
-  label11.setOpaque(true);
-  
-  
-  // Pump 1
-  label12 = new GLabel(this, 286, 604, 60, 18);
+  label12 = new GLabel(this, 536, 604, 60, 18);
   label12.setText("...");
-  label12.setLocalColorScheme(GCScheme.RED_SCHEME);
+  label12.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   label12.setOpaque(true);
   
+  
   // Pump 1
-  label20 = new GLabel(this, 213, 604, 71, 18);
-  label20.setText("PUMP");
-  //label20.setLocalColorScheme(GCScheme.RED_SCHEME);
-  label20.setOpaque(true);
+  label11 = new GLabel(this, 286, 604, 60, 18);
+  label11.setText("...");
+  label11.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  label11.setOpaque(true);
+  
+  // Pump 1
+  label21 = new GLabel(this, 213, 604, 71, 18);
+  label21.setText("PUMP");
+  label21.setOpaque(true);
   
   // Pump 2
-  label21 = new GLabel(this, 463, 604, 71, 18);
-  label21.setText("PUMP");
-  //label20.setLocalColorScheme(GCScheme.RED_SCHEME);
-  label21.setOpaque(true);
+  label20 = new GLabel(this, 463, 604, 71, 18);
+  label20.setText("PUMP");
+  label20.setOpaque(true);
 
   label13 = new GLabel(this,10, 270, 385, 36);
   label13.setText("Waiting");

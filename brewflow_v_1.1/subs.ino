@@ -42,7 +42,7 @@ void pumpset(int wpump, int wspeed){
 void Opdater_Status(){
   if (millis() >= (lastupdatestat + 900)){
     lastupdatestat =  millis();
-    int nop[] = {21, temp_1*10, temp_2*10, temp_3*10, temp_4*10, temp_5*10, temp_6*10, target_temp_1, target_temp_2, target_temp_3*10, target_temp_4*10, target_temp_5*10, target_temp_6*10, heat_1_speed, heat_2_speed, pumpspeed[0], pumpspeed[1], pumpspeed[2], mlttState, hlttState, millis()/1000};
+    int nop[] = {23, temp_1*10, temp_2*10, temp_3*10, temp_4*10, temp_5*10, temp_6*10, target_temp_1, target_temp_2, target_temp_3*10, target_temp_4*10, target_temp_5*10, target_temp_6*10, heat_1_speed, heat_2_speed, pumpspeed[0], pumpspeed[1], pumpspeed[2], mlttState, hlttState, vrg1, vrg2, millis()/1000};
     SendData(1010, nop);
   }	
 }

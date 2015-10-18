@@ -37,20 +37,58 @@ void serialEvent(Serial myPort) {
   switch(command)
     {
     case 1010:
-    
+      
+      
+      
+      
       float temp_1 = float(myArray[2])/10; 
       float temp_2 = float(myArray[3])/10; 
       float temp_3 = float(myArray[4])/10;    
       float temp_4 = float(myArray[5])/10; 
       int target_temp_1 = int(myArray[8]);      
-      int target_temp_2 = int(myArray[10]);
-      int heat_1 = int(myArray[15])*20;     
-      int heat_2 = int(myArray[14])*20; 
+      int target_temp_2 = int(myArray[9]);
+      int heat_1 = int(myArray[14])*20;
+      int heat_2 = int(myArray[15])*20;      
+      
+      int vrg1 = int(myArray[21]);      
+      if (vrg1 > 0){
+         label4.setLocalColorScheme(GCScheme.RED_SCHEME);  
+      }
+      else
+      {
+         label4.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+      }
+     
+      int vrg2 = int(myArray[22]);
+      if (vrg2 > 0){
+         label5.setLocalColorScheme(GCScheme.RED_SCHEME);  
+      }
+      else
+      {
+         label5.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+      }      
       float pump_1_speed = (float(myArray[16])/255)*100;
+      if (pump_1_speed > 0){
+         label11.setLocalColorScheme(GCScheme.RED_SCHEME);
+      }
+      else
+      {
+      label11.setLocalColorScheme(GCScheme.CYAN_SCHEME);  
+      }
       float pump_2_speed = (float(myArray[17])/255)*100;
+            if (pump_2_speed > 0){
+         label12.setLocalColorScheme(GCScheme.RED_SCHEME);
+      }
+      else
+      {
+      label12.setLocalColorScheme(GCScheme.CYAN_SCHEME);  
+      }
+      float pump_3_speed = (float(myArray[18])/255)*100;      
+     
+      
       //float pump_3_speed = (float(myArray[17])/255)*100;
-      label1.setText(str(target_temp_1)+"°"); // pot 1 temp 1
-      label2.setText(str(target_temp_2)+"°"); // pot 1 temp 1
+      label2.setText(str(target_temp_1)+"°"); // pot 1 temp 1
+      label1.setText(str(target_temp_2)+"°"); // pot 1 temp 1
       label3.setText(str(temp_1)+"°");        // pot 1 temp 1
       label4.setText(str(heat_1)+" W");   //HLT heater
       label5.setText(str(heat_2)+" W");   //MLT heater

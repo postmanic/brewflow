@@ -48,12 +48,16 @@ double heat_2_speed;
 
 // PID setup
 
-double kc = 1.2, ti = 2.5, td = 0.5, ts = 5;
-double k_lpf, k0, k1, k2, k3, lpf1, lpf2, pp, pi, pd;
-static double ek_1, ek_2, xk_1, xk_2, yk_1, yk_2, lpf_1, lpf_2;
-boolean vrg = false;
-int ts_ticks;
-
+double v1kc = 1.2, v1ti = 2.5, v1td = 0.5, v1ts = 5;
+double v1k_lpf, v1k0, v1k1, v1k2, v1k3, v1lpf1, v1lpf2, v1pp, v1pi, v1pd;
+double v2kc = 1.2, v2ti = 2.5, v2td = 0.5, v2ts = 5;
+double v2k_lpf, v2k0, v2k1, v2k2, v2k3, v2lpf1, v2lpf2, v2pp, v2pi, v2pd;
+static double v1ek_1, v1ek_2, v1xk_1, v1xk_2, v1yk_1, v1yk_2, v1lpf_1, v1lpf_2;
+static double v2ek_1, v2ek_2, v2xk_1, v2xk_2, v2yk_1, v2yk_2, v2lpf_1, v2lpf_2;
+boolean vrg1 = false;
+boolean vrg2 = false;
+int v1ts_ticks;
+int v2ts_ticks;
 // Control setup
 
 OneWire oneWire(One_Wire_Bus);
@@ -80,43 +84,57 @@ long lastupdatestat;
 
 void loop(void) {
   Aflaes_Temperaturer();
-  Opdater_PID();
+  update_pid_1();
+  update_pid_2();
   Opdater_Status(); 
  
 if (stringComplete){
 
   cbuf = inputString.substring(0,4);
   bbuf = inputString.substring(4);
-  
-  Serial.println(cbuf+" / "+bbuf);
-   
+     
   if (inputString.startsWith("9010", 0)){
-    bbuf = inputString.substring(4);
     mash = bbuf.toInt();
-    vrg = 1;
+    vrg1 = 1;
     target_temp_1 = mash;
-  
   }  
-  
    if (inputString.startsWith("9020", 0)){
       pumpset(0, bbuf.toInt());
    }  
+  
    if (inputString.startsWith("9030", 0)){
       pumpset(1, bbuf.toInt());
    }   
    
    if (inputString.startsWith("9040", 0)){
       pumpset(2, bbuf.toInt());
-   }   
-  
-  
+   } 
+   
   if (inputString.startsWith("9050", 0)){
     bbuf = inputString.substring(4);
     mash = bbuf.toInt();
-    vrg = 1;
+    vrg1 = 1;
     target_temp_1 = mash;
-  
-  }   						
+   }
+
+
+
+   if (inputString.startsWith("9060", 0)){
+      vrg1 = 0;
+   } 
+ 
+  if (inputString.startsWith("9070", 0)){
+    bbuf = inputString.substring(4);
+    mash = bbuf.toInt();
+    vrg2 = 1;
+    target_temp_2 = mash;
+   }   
+     if (inputString.startsWith("9080", 0)){
+      vrg2 = 0;
+   }  
+   
+   
+   						
   inputString = "";
   stringComplete = false;
 }

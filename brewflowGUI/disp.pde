@@ -352,7 +352,7 @@ String pump3Speed = str((int)0);
 
 void SetHLTTemp() {
 String HLTtemp = str((int)HLTSetTemp);
-  myPort.write("9050");
+  myPort.write("9010");
   myPort.write(HLTtemp);
   myPort.write(lf);
 
@@ -383,4 +383,7 @@ String MLTtemp = str((int)MLTSetTemp);
 
 }
 
-
+void dogWatch() {
+  myPort.write("1111");
+  myPort.write(lf);
+}

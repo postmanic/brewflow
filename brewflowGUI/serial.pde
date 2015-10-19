@@ -10,6 +10,7 @@
    int HLTSetTemp = 70, MLTSetTemp = 70, FERSetTemp = 20, MashInTemp = 59, MashStep1 = 50, MashStep2 = 66, MashStep3 = 72, MashOutTemp = 78, PumpSpeed1 = 0, PumpSpeed2 = 0, PumpSpeed3 = 0;  
    int lf = 10, val;  
    int mashstep = 0;
+   int dogwatch;
 /*   =================================================================================       
      Global variables
      =================================================================================*/
@@ -37,9 +38,6 @@ void serialEvent(Serial myPort) {
   switch(command)
     {
     case 1010:
-      
-      
-      
       
       float temp_1 = float(myArray[2])/10; 
       float temp_2 = float(myArray[3])/10; 

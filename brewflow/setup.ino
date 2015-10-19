@@ -3,7 +3,7 @@ void setup() {
   init_pid_2();
   sensors.begin();
   delay(2);
-
+  wdt_enable(WDTO_8S);
   int temp_sens = (sensors.getDeviceCount(), DEC);
   
   analogReference(EXTERNAL);

@@ -3,8 +3,6 @@
       img = loadImage("tank.png");
       ControlTimer c;
       
-      
-      
       size(800, 800); 
       createGUI();
       VisKnapper();
@@ -68,6 +66,9 @@
      t.setValue(c.toString());
      t.draw(this);
 
-   
+     if (int (dogwatch+5000) < millis()){    
+     dogWatch();
+     dogwatch = millis();
+     }
  }
 

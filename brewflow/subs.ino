@@ -1,4 +1,4 @@
-void Aflaes_Temperaturer(){
+void read_temperatures(){
   sensors.requestTemperatures(); 
  
   temp_1 = sensors.getTempCByIndex(0);
@@ -15,49 +15,27 @@ void Aflaes_Temperaturer(){
   delay(2);
 }
 
-void pumpset(int wpump, int wspeed){
-  
-    if (wspeed > 100) {
-      wspeed = 100;
-    }
-    if (wspeed > 0) {
-      
-    pumpspeed[wpump] = wspeed * 255 / 100;
-
-    //Serial.println(test);
-    
-    analogWrite(pump[wpump], wspeed);
-    pumpstate[wpump] = HIGH;
-    }
-    else {
-    analogWrite(pump[wpump], 0);
-    pumpspeed[wpump] = 0;
-    pumpstate[wpump] = LOW;
-    } 
-}
-
-
-
-
-void Opdater_Status(){
+void update_status(){
   if (millis() >= (lastupdatestat + 900)){
     lastupdatestat =  millis();
     int nop[] = {23, temp_1*10, temp_2*10, temp_3*10, temp_4*10, temp_5*10, temp_6*10, target_temp_1, target_temp_2, target_temp_3*10, target_temp_4*10, target_temp_5*10, target_temp_6*10, heat_1_speed, heat_2_speed, pumpspeed[0], pumpspeed[1], pumpspeed[2], mlttState, hlttState, vrg1, vrg2, millis()/1000};
-    SendData(1010, nop);
+    send_data(1010, nop);
   }	
 }
 
 void serialEvent() {
   while (Serial.available()) {
-    char inChar = (char)Serial.read();
-    inputString += inChar;
+    int inChar = Serial.read();
+    inputString += (char)inChar;
     if (inChar == '\n') {
       stringComplete = true;
     }
   }
 }
+
+
  
-void SendData(int Command, int nop[]){
+void send_data(int Command, int nop[]){
   Serial.print(Command);
   for (int x = 0;x<nop[0];x++){
     Serial.print(",");

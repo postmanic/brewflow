@@ -10,6 +10,8 @@
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <avr/io.h>
+#include <avr/wdt.h>
 
 // Hardware setup
 
@@ -56,8 +58,8 @@ static double v1ek_1, v1ek_2, v1xk_1, v1xk_2, v1yk_1, v1yk_2, v1lpf_1, v1lpf_2;
 static double v2ek_1, v2ek_2, v2xk_1, v2xk_2, v2yk_1, v2yk_2, v2lpf_1, v2lpf_2;
 boolean vrg1 = false;
 boolean vrg2 = false;
-int v1ts_ticks;
-int v2ts_ticks;
+int v1ts_ticks, v2ts_ticks;
+
 // Control setup
 
 OneWire oneWire(One_Wire_Bus);
@@ -83,57 +85,69 @@ long lastupdatestat;
 
 
 void loop(void) {
-  Aflaes_Temperaturer();
+  read_temperatures();
   update_pid_1();
   update_pid_2();
-  Opdater_Status(); 
+  update_status(); 
  
 if (stringComplete){
 
   cbuf = inputString.substring(0,4);
   bbuf = inputString.substring(4);
-     
-  if (inputString.startsWith("9010", 0)){
-    mash = bbuf.toInt();
-    vrg1 = 1;
-    target_temp_1 = mash;
-  }  
-   if (inputString.startsWith("9020", 0)){
-      pumpset(0, bbuf.toInt());
-   }  
+  long bbuf_int = bbuf.toInt();
+  long cbuf_int = cbuf.toInt();
+  Serial.print(bbuf_int);
+  Serial.print(" / ");  
+  Serial.println(cbuf_int);
+    
+  // case cbuf eller int?
   
-   if (inputString.startsWith("9030", 0)){
-      pumpset(1, bbuf.toInt());
-   }   
-   
-   if (inputString.startsWith("9040", 0)){
-      pumpset(2, bbuf.toInt());
-   } 
-   
-  if (inputString.startsWith("9050", 0)){
-    bbuf = inputString.substring(4);
-    mash = bbuf.toInt();
+  
+  switch (cbuf_int) {
+    
+  case 1111:
+    wdt_reset();
+    break;  
+    
+  case 9010:  // Set HLT PID to 'ON' and set temp to bbuf.
     vrg1 = 1;
-    target_temp_1 = mash;
-   }
+    target_temp_1 = bbuf_int;
+    break;
+    
+  case 9020: // Set pump 1 to 'ON' and PWM to bbuf.
+    pump_set(0, bbuf_int);
+    break;
+    
+  case 9030: // Set pump 1 to 'ON' and PWM to bbuf.
+    pump_set(1, bbuf_int);
+    break;   
 
+  case 9040:
+    pump_set(2, bbuf_int);
+    break;
 
+  case 9060:    
+    vrg1 = 0;
+    break; 
 
-   if (inputString.startsWith("9060", 0)){
-      vrg1 = 0;
-   } 
- 
-  if (inputString.startsWith("9070", 0)){
-    bbuf = inputString.substring(4);
-    mash = bbuf.toInt();
+  case 9070:      
     vrg2 = 1;
-    target_temp_2 = mash;
-   }   
-     if (inputString.startsWith("9080", 0)){
-      vrg2 = 0;
-   }  
-   
-   
+    target_temp_2 = bbuf_int;
+    break; 
+     
+  case 9080:       
+    vrg2 = 0;
+    break; 
+
+  case 9999:
+    wdt_enable(WDTO_15MS);
+    while(1){};
+    break;
+    
+  default:
+    // statements
+  break;
+}
    						
   inputString = "";
   stringComplete = false;

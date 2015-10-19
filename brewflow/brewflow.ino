@@ -1,11 +1,23 @@
 /*
-  BrewFlow
-
-  by Lars Rosenskjold Jacobsen
-  
-  PID author: E. vd Logt.
-  
-  
+ * Copyright 2015 brewflow/Lars Rosenskjold
+ *
+ * PID Copyright 2001 - 2015 Emile van de Logt
+ * <http://www.vandelogt.nl>
+ * 
+ * This file is part of brewflow.
+ * 
+ * brewflow is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * brewflow is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with brewflow.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <OneWire.h>
@@ -95,17 +107,11 @@ if (stringComplete){
   cbuf = inputString.substring(0,4);
   bbuf = inputString.substring(4);
   long bbuf_int = bbuf.toInt();
-  long cbuf_int = cbuf.toInt();
-  Serial.print(bbuf_int);
-  Serial.print(" / ");  
-  Serial.println(cbuf_int);
-    
-  // case cbuf eller int?
-  
+  long cbuf_int = cbuf.toInt();  
   
   switch (cbuf_int) {
     
-  case 1111:
+  case 1111: // System will reset AVR if no response is received from brewflowGUI.
     wdt_reset();
     break;  
     
@@ -139,13 +145,13 @@ if (stringComplete){
     vrg2 = 0;
     break; 
 
-  case 9999:
+  case 9999: // Turn of system by resetting AVR.
     wdt_enable(WDTO_15MS);
     while(1){};
     break;
     
   default:
-    // statements
+    // statements, allways statements
   break;
 }
    						

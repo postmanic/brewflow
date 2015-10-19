@@ -6,15 +6,8 @@
       size(800, 800); 
       createGUI();
       VisKnapper();
-      int PortSelected=1;      /* ====================================================================
-                              adjust this (0,1,2...) until the correct port is selected 
-                              In my case 2 for COM4, after I look at the Serial.list() string 
-                              println( Serial.list() );
-                              [0] "COM1"  
-                              [1] "COM2" 
-                              [2] "COM4"
-                             ==================================================================== */
-      SerialPortSetup();      // speed of 115200 bps etc.
+      int PortSelected=1;
+      SerialPortSetup();
       myPort.bufferUntil(lf);
   }
 
@@ -62,11 +55,11 @@
     //  t.setValue("00:00:00");
      // t.draw(this);
       
-    t.setPosition(200, 160);
+     t.setPosition(200, 160);
      t.setValue(c.toString());
      t.draw(this);
 
-     if (int (dogwatch+5000) < millis()){    
+     if (int (dogwatch+7000) < millis()){    
      dogWatch();
      dogwatch = millis();
      }

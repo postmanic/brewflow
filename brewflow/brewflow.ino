@@ -3,6 +3,8 @@
  *
  * 
  * This file is part of brewflow.
+ *
+ * Mash control and ferment control. * 
  * 
  * brewflow is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +36,8 @@
 
 #define heat_1 (9)        // MLT heater PWM.
 #define heat_2 (10)       // HLT heater PWM.
+
+                          // (11) PID fermentor (12) Heat / Cool (13) Ventilator 
 
 #define SECS_PER_MIN  (60UL)
 #define SECS_PER_HOUR (3600UL)

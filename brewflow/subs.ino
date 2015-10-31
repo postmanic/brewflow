@@ -1,8 +1,6 @@
 /*
  * Copyright 2015 brewflow/Lars Rosenskjold
  *
- * PID Copyright 2001 - 2015 Emile van de Logt
- * <http://www.vandelogt.nl> 
  *
  * This file is part of brewflow.
  * 
@@ -40,7 +38,7 @@ void read_temperatures(){
 void update_status(){
   if (millis() >= (lastupdatestat + 900)){
     lastupdatestat =  millis();
-    int nop[] = {23, temp_1*10, temp_2*10, temp_3*10, temp_4*10, temp_5*10, temp_6*10, target_temp_1, target_temp_2, target_temp_3*10, target_temp_4*10, target_temp_5*10, target_temp_6*10, heat_1_speed, heat_2_speed, pumpspeed[0], pumpspeed[1], pumpspeed[2], mlttState, hlttState, vrg1, vrg2, millis()/1000};
+    int nop[] = {23, temp_1*10, temp_2*10, temp_3*10, temp_4*10, temp_5*10, temp_6*10, target_temp_1, target_temp_2, target_temp_3*10, target_temp_4*10, target_temp_5*10, target_temp_6*10, heat_1_speed, heat_2_speed, pumpspeed_1, pumpspeed_2, mlttState, hlttState, vrg1, vrg2, millis()/1000};
     send_data(1010, nop);
   }	
 }
@@ -55,6 +53,37 @@ void serialEvent() {
   }
 }
 
+void pump_set1(int wspeed){
+  if (wspeed > 100) {
+    wspeed = 100;
+  }
+  if (wspeed > 0) {
+    pumpspeed_1 = wspeed * 255 / 100;
+    analogWrite(pump1, wspeed);
+    pumpstate_1 = HIGH;
+  }
+  else {
+    analogWrite(pump1, 0);
+    pumpspeed_1 = 0;
+    pumpstate_1 = LOW;
+  } 
+}
+
+void pump_set2(int wspeed){
+  if (wspeed > 100) {
+    wspeed = 100;
+  }
+  if (wspeed > 0) {
+    pumpspeed_2 = wspeed * 255 / 100;
+    analogWrite(pump2, wspeed);
+    pumpstate_2 = HIGH;
+  }
+  else {
+    analogWrite(pump2, 0);
+    pumpspeed_2 = 0;
+    pumpstate_2 = LOW;
+  } 
+}
 
  
 void send_data(int Command, int nop[]){

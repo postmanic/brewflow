@@ -6,11 +6,11 @@
    PGraphics pg;
    ControlP5 cp5;
    Textlabel t;
-   ControlTimer c, MashStep1Timer, MashStep2Timer, MashStep3Timer;
+   ControlTimer c, d, MashStep1Timer, MashStep2Timer, MashStep3Timer;
    int HLTSetTemp = 70, MLTSetTemp = 70, FERSetTemp = 20, MashInTemp = 59, MashStep1 = 50, MashStep2 = 66, MashStep3 = 72, MashOutTemp = 78, PumpSpeed1 = 0, PumpSpeed2 = 0, PumpSpeed3 = 0;  
    int lf = 10, val;  
    int mashstep = 0;
-   int dogwatch;
+   int dogwatch, linewatch;
 /*   =================================================================================       
      Global variables
      =================================================================================*/

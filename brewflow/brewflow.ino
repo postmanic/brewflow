@@ -1,8 +1,6 @@
 /*
  * Copyright 2015 brewflow/Lars Rosenskjold
  *
- * PID Copyright 2001 - 2015 Emile van de Logt
- * <http://www.vandelogt.nl>
  * 
  * This file is part of brewflow.
  * 
@@ -29,21 +27,13 @@
 
 #define One_Wire_Bus (3)  // Thermometers.
 
-int pump[] = {5,6,11};
-boolean pumpstate[] = {LOW,LOW,LOW};
-int pumpspeed[] = {0,0,0};
+#define pump1ctrl (4)     // Pump 1 control.
+#define pump1     (5)     // Pump 1 PWM.
+#define pump2     (6)     // Pump 2 PWM.
+#define pump2ctrl (7)     // Pump 2 control.
 
-#define heat_1 (9)        // MLT heater [mlth].
-#define heat_2 (10)       // HLT heater [hlth].
-
-#define pump_1_ctrl (4)   // Pump 1 control output.
-#define pump_2_ctrl (7)   // Pump 2 control output.
-#define pump_3_ctrl (8)   // Pump 3 control output.
-
-double heat_1_speed;
-double heat_2_speed;
-
-// Time setup
+#define heat_1 (9)        // MLT heater PWM.
+#define heat_2 (10)       // HLT heater PWM.
 
 #define SECS_PER_MIN  (60UL)
 #define SECS_PER_HOUR (3600UL)
@@ -86,6 +76,15 @@ float target_temp_3, target_temp_4;
 float temp_5, temp_6;
 float target_temp_5, target_temp_6;
 
+double heat_1_speed;
+double heat_2_speed;
+
+float pumpspeed_1;
+float pumpspeed_2;
+
+boolean pumpstate_1;
+boolean pumpstate_2;
+
 boolean mlthState, mlttState, hlthState, hlttState;
 
 int mash = 0;
@@ -97,67 +96,63 @@ long lastupdatestat;
 
 
 void loop(void) {
+
   read_temperatures();
   update_pid_1();
   update_pid_2();
   update_status(); 
  
-if (stringComplete){
+  if (stringComplete){
 
-  cbuf = inputString.substring(0,4);
-  bbuf = inputString.substring(4);
-  long bbuf_int = bbuf.toInt();
-  long cbuf_int = cbuf.toInt();  
+    cbuf = inputString.substring(0,4);
+    bbuf = inputString.substring(4);
+    long bbuf_int = bbuf.toInt();
+    long cbuf_int = cbuf.toInt();  
   
-  switch (cbuf_int) {
+    switch (cbuf_int) {
     
-  case 1111: // System will reset AVR if no response is received from brewflowGUI.
-    wdt_reset();
-    break;  
+      case 1111: // System will reset AVR if no response is received from brewflowGUI.
+        wdt_reset();
+      break;  
     
-  case 9010:  // Set HLT PID to 'ON' and set temp to bbuf.
-    vrg1 = 1;
-    target_temp_1 = bbuf_int;
-    break;
+      case 9010:  // Set HLT PID to 'ON' and set temp to bbuf.
+        vrg1 = 1;
+        target_temp_1 = bbuf_int;
+      break;
     
-  case 9020: // Set pump 1 to 'ON' and PWM to bbuf.
-    pump_set(0, bbuf_int);
-    break;
+      case 9020: // Set pump 1 to 'ON' and PWM to bbuf.
+        pump_set1(bbuf_int);
+      break;
     
-  case 9030: // Set pump 1 to 'ON' and PWM to bbuf.
-    pump_set(1, bbuf_int);
-    break;   
+      case 9030: // Set pump 2 to 'ON' and PWM to bbuf.
+        pump_set2(bbuf_int);
+      break;   
 
-  case 9040:
-    pump_set(2, bbuf_int);
-    break;
+      case 9060: // Set HLT PID to off.   
+        vrg1 = 0;
+      break; 
 
-  case 9060:    
-    vrg1 = 0;
-    break; 
-
-  case 9070:      
-    vrg2 = 1;
-    target_temp_2 = bbuf_int;
-    break; 
+      case 9070: // Set MLT PID to 'ON' and set temp to bbuf.   
+        vrg2 = 1;
+        target_temp_2 = bbuf_int;
+      break;
      
-  case 9080:       
-    vrg2 = 0;
-    break; 
+      case 9080: // Set MLT PID to off.
+        vrg2 = 0;
+      break;
 
-  case 9999: // Turn of system by resetting AVR.
-    wdt_enable(WDTO_15MS);
-    while(1){};
-    break;
+      case 9999: // Turn of system by resetting AVR.
+        wdt_enable(WDTO_15MS);
+        while(1){};
+      break;
     
-  default:
-    // statements, allways statements
-  break;
-}
-   						
-  inputString = "";
-  stringComplete = false;
-}
+      default:
+        // statements, allways statements
+      break;
+    }
 
+    inputString = "";
+    stringComplete = false;
 
+  }
 }

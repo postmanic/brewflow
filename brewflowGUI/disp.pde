@@ -3,6 +3,7 @@ public void VisKnapper(){
    cp5 = new ControlP5(this);
 
    c = new ControlTimer();
+   d = new ControlTimer();
    t = new Textlabel(cp5,"--",100,100);
 
   // add a horizontal sliders, the value of this slider will be linked
@@ -247,7 +248,12 @@ public void VisKnapper(){
 
 void ReadyReceived() {
   
+  if (mashstep == 5 ) {
+  }
+  else
+  { 
   mashstep++;
+  }
     
   switch(mashstep)
     {
@@ -273,30 +279,39 @@ void ReadyReceived() {
     break;
     
     case 5:
-     label13.setText("Step 1, timer running.");        
+    
+     // Brewer has added grain to hot water. 
+     
+     label13.setText("Mash step 1: Timer running. Pump running.");
+
+      //#ifdef d
+      //#elseif
+      d = new ControlTimer();
+      //#endif 
+      
     break;
     
     case 6:
      // Timer done
-     label13.setText("Heating to "+MashInTemp);
+     label13.setText("Mash step 2: Heating to "+MashInTemp);
      // Send msg to Arduino. Heat to preset temp.     
     break;    
      
     case 7:
      // msg received from Arduino. temperature reached.
-     label13.setText("Step 2, timer running.");
+     label13.setText("Mash step 2: Timer running.");
  
     break;     
     
     case 8:
      // Timer done
-     label13.setText("Heating to "+MashInTemp);
+     label13.setText("Mash step 3: Heating to "+MashInTemp);
      // Send msg to Arduino. Heat to preset temp.     
     break;      
     
      case 9:
      // msg received from Arduino. temperature reached.
-     label13.setText("Step 3, timer running.");    
+     label13.setText("Mash step 3: Timer running.");    
     break;     
     }
   
@@ -341,6 +356,9 @@ String pump3Speed = str((int)PumpSpeed3);
   myPort.write(lf);
 
 }
+
+// Event stop pump has been pressed. Event stops when pump stop
+// is received from Arduino.
 
 void StopPump3() {
 String pump3Speed = str((int)0);

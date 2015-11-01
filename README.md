@@ -1,5 +1,5 @@
 # brewflow
-Control your brewery we must
+-[] Control your brewery we must
 
 Setup with three pots with the option of choosing RIMS or HERMS on two, third is fermentor for control of temperature. Fermentor supports heating or/and cooling control.
 Controls two pumps, three heaters, one cooling and ten thermometers.

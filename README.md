@@ -1,9 +1,7 @@
 # brewflow
-Control your brewery we must
 
-- Setup with three pots with the option of choosing RIMS or HERMS on two, third is fermentor for control of temperature.
-- Fermentor supports heating or/and cooling control.  
-- Controls two pumps, three heaters, one cooling and ten thermometers.  
+- Setup with two pots
+- Controls two pumps, two heaters and four thermometers.  
 - PID control of heaters with PWM output.  
 - PWM control of pumps.  
 - Supports onewire bus with range of device to connect.  

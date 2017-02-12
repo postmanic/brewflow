@@ -20,27 +20,19 @@
 
 void setup() { 
 
-  init_pid_1();
-  init_pid_2();
-   
-  wdt_enable(WDTO_8S); // Safety first
-  
+  init_pid();
+  //wdt_enable(WDTO_8S); // Safety first
+ 
   sensors.begin(); 
   int temp_sens = (sensors.getDeviceCount(), DEC);
   
   analogReference(EXTERNAL);
   
-  pinMode(heat_1, OUTPUT);
-  pinMode(heat_2, OUTPUT); 
+  pinMode(heat1, OUTPUT);
   pinMode(pump1ctrl, OUTPUT);
-  pinMode(pump2ctrl, OUTPUT);
-
   
-  analogWrite(heat_1, LOW);
-  analogWrite(heat_2, LOW); 
-  analogWrite(pump1ctrl, LOW);
-  analogWrite(pump2ctrl, LOW); 
-
+  analogWrite(heat1, LOW);
   
   Serial.begin(57600);
+  Serial.println("BrewFlow Ready!");
 }

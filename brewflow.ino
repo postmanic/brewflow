@@ -28,10 +28,10 @@
 #define One_Wire_Bus (3)  // Thermometers.
 #define pump1ctrl (4)     // Pump 1 control.
 #define pump1pwm  (5)     // Pump 1 PWM.
-#define pump2ctrl (6)     // Pump 2 control.
-#define pump2pwm  (7)     // Pump 2 PWM.
+//#define pump2ctrl (6)     // Pump 2 control.
+//#define pump2pwm  (7)     // Pump 2 PWM.
 #define heat1 (9)         // MLT heater PWM.
-#define heat2 (10)        // HLT heater PWM.
+//#define heat2 (10)        // HLT heater PWM.
 #define SECS_PER_MIN  (60UL)
 #define SECS_PER_HOUR (3600UL)
 #define SECS_PER_DAY  (SECS_PER_HOUR * 24L)
@@ -48,7 +48,7 @@
 #define GMA_LLIM (0.0)
 
 double kc = 1.2, ti = 2.5, td = 0.5, ts = 5, k_lpf, k0, k1, k2, k3, lpf1, lpf2, pp, pi, pd;
-double temp, temp1, temp2, temp3, temp4, pump1speed, pump2speed, intensity, pumptimer, debugtemp;
+double temp, temp1, temp2, temp3, temp4, pump1speed, pump2speed, intensity, pumptimer, debugtemp1, debugtemp2;
 double target; // Target is the PID parameter which must be maintained.
 double target1; // Mash In temperature set by user.
 double target2; // Step 1 temperature set by user.

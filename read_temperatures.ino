@@ -19,13 +19,14 @@
 
  void read_temperatures(){
   sensors.requestTemperatures(); 
-  temp1 = debugtemp;
+  temp1 = debugtemp1;
   //temp1 = sensors.getTempCByIndex(0);
   delay(2);
-  temp2 = sensors.getTempCByIndex(1); 
+  temp2 = debugtemp2;
+  //temp2 = sensors.getTempCByIndex(1); 
   delay(2);
-  temp3 = sensors.getTempCByIndex(2);
-  delay(2);
-  temp4 = sensors.getTempCByIndex(3); 
-  delay(2);
+  //temp3 = sensors.getTempCByIndex(2);
+  //delay(2);
+  //temp4 = sensors.getTempCByIndex(3); 
+  //delay(2);
 }

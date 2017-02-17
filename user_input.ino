@@ -1,9 +1,6 @@
 /*
- * Copyright 2015 brewflow/Lars Rosenskjold
- *
- *
  * This file is part of brewflow.
- * 
+ *
  * brewflow is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -34,32 +31,80 @@ void user_input(){
         commands = bbuf_int;
       break;
           
-      case 9010:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees
-        target = bbuf_int;
+      case 9010:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Mash In
+        target1 = bbuf_int;
+      break;
+      case 9011:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 1
+        target2 = bbuf_int;
+      break;
+      case 9012:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 2
+        target3 = bbuf_int;
+      break;
+      case 9013:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 3
+        target4 = bbuf_int;
+      break;
+      case 9014:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 4
+        target5 = bbuf_int;
+      break;
+      case 9015:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Mash Out
+        target6 = bbuf_int;
+      break;
+               
+      case 9021:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 1
+        steptimer1 = bbuf_int;
+      break;
+      case 9022:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 2
+        steptimer2 = bbuf_int;
+      break;
+      case 9023:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 3
+        steptimer3 = bbuf_int;
+      break;
+      case 9024:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 4
+        steptimer4 = bbuf_int;
+      break;      
+
+      case 9030:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Boil
+        steptimer5 = bbuf_int;
+      break;   
+
+      case 1010:  // Indstilling af debug temp. Simulerer temp probe1
+        debugtemp = bbuf_int;
+      break;        
+
+      case 9041:  // User acknowledges that there is water in tank. No water will damage equipment
+        if (bbuf_int == 1){
+          ilock = true;
+        }
       break;
 
-      case 9015:  // Set step timer to bbuf. 9015xx where xx is time in mnutes
-        steptimer = bbuf_int;
+      case 9042:  // User acknowledges that there is water in tank. No water will damage equipment
+        if (bbuf_int == 2 && step_x == 2 && ilock == true){
+          mlock = true;
+        }
       break;
-      
-      case 9019:  // User acknowledges that there is water in tank. No water will damage equipment
-        ilock = bbuf_int;
-      break;
-    
-      case 9020: // Set pump1 to 'ON' and PWM to bbuf. 9020xxx where xxx is motor turn in percentage
+
+      case 9050: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
+        if (ilock == true &&  target1 > 0) {
+          step_x = 1;
+          pumptimer =  millis();
+          delay(2);
+        }
+      break; 
+
+      case 9072: // Set pump1 to 'ON' and PWM to bbuf. 9020xxx where xxx is motor turn in percentage
         pump_set1(bbuf_int);
       break;
 
-      case 9025: // Set pump1 to 'OFF'.
+      case 9073: // Set pump1 to 'OFF'.
         pump_set1(0);
       break;
       
-      case 9030: // Set MLT PID to 'ON' and set temp to bbuf. 9030xxx where xxx is temperature in celcius degrees. Manuel control  
+      case 9074: // Set MLT PID to 'ON' and set temp to bbuf. 9030xxx where xxx is temperature in celcius degrees. Manuel control  
         vrg = 1;
-        target = bbuf_int;
+        target1 = bbuf_int;
       break;
 
-      case 9035: // Set MLT PID to off. 
+      case 9075: // Set MLT PID to off. 
         vrg = 0;
       break; 
 

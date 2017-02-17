@@ -1,9 +1,6 @@
 /*
- * Copyright 2015 brewflow/Lars Rosenskjold
- *
- *
  * This file is part of brewflow.
- * 
+ *
  * brewflow is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -25,30 +22,65 @@ void update_ui(int tempupdate){
     if (commands == 1){
       Serial.println("Commands");
       Serial.println("--------");
-      Serial.println("9010xx: Set target temp. xx = temp in celcius");
-      Serial.println("9015xx: Set timer. xx = time in minutes");
-      Serial.println("90191: Water added acknowledge");
-      Serial.println("9020xx: Pump on. xxx = speed in percentage"); 
-      Serial.println("9025: Pump off"); 
-      Serial.println("9030xx: Heat on. xx = temp in celcius");
-      Serial.println("9035: Heat off");
-      Serial.println("9070: Step start");
+      Serial.println("9010xx: Set Mash In Temp. xx = temp in celcius");
+      Serial.println("901xyy: Set step Temp. x = step. yy = temp in celcius");      
+      Serial.println("902xyy: Set step timer. x = step. yy = time in minutes");
+      Serial.println("9030xx: Set Boil timer. = time in minutes");      
+      Serial.println("90411: Water added acknowledge");
+      Serial.println("90422: Malt added acknowledge");      
+      Serial.println("9050: Brew start");
       Serial.println("9999: Reset"); 
       Serial.println("");
       }
     Serial.println("---------------");
     Serial.print("| Update @ ");
-    Serial.print(millis()/1000);
-    Serial.println(" |");
+    Serial.print(steptimer);
+    Serial.print(" | ");
+    Serial.println(millis()/1000);    
+    Serial.print("Case: ");   
+    Serial.println(step_x);  
     Serial.println("--------------------------------------------");
+
+  if (ilock == true && step_x == 0){
     Serial.println("|             BrewFlow v0.1b               |");
-  if (ilock == true){
-Serial.println("|              System Ready                |");
-}
-else 
-{
-Serial.println("|               System Idle                |");
-}
+    Serial.println("|              System Ready                |");
+  }
+  
+  if (ilock == false && step_x == 0){ 
+    Serial.println("|             BrewFlow v0.1b               |");
+    Serial.println("|              !!ADD WATER!!               |");
+  }
+
+  if (ilock == true && step_x == 1){ 
+    Serial.println("|                 Mash In                  |");
+    Serial.println("|           Reaching Mash In Temp          |");
+  }
+
+  if (ilock == true && step_x == 2){ 
+    Serial.println("|                 Mash In                 |");
+    Serial.println("|     ** Add ingredients and continue **  |");
+  }
+
+
+  if (ilock == true && step_x == 3){ 
+    Serial.println("|                 Step 1                  |");
+    Serial.println("|          ** Timer running  **           |");
+  }
+
+  if (ilock == true && step_x == 4){ 
+    Serial.println("|                 Step 2                  |");
+    Serial.println("|          ** Timer running  **           |");
+  }
+  if (ilock == true && step_x == 5){ 
+    Serial.println("|                 Step 3                  |");
+    Serial.println("|          ** Timer running  **           |");
+  }
+  if (ilock == true && step_x == 6){ 
+    Serial.println("|                 Step 4                  |");
+    Serial.println("|          ** Timer running  **           |");
+  }  
+
+  
 Serial.println("--------------------------------------------");
 
 Serial.print("  MLT temp [top: ");
@@ -79,12 +111,30 @@ else
     Serial.println("% ON]");
 }
 Serial.println("--------------------------------------------");
-
 Serial.println(""); 
-   
-Serial.print("Target temp.: ");
-Serial.println(target);
-Serial.print("Timer.......: ");
-Serial.println(steptimer);
+Serial.print("Mash In Temp..: ");
+Serial.println(target1);
+Serial.print("Step 1 - Temp.: ");
+Serial.print(target2);
+Serial.print("  Timer.: ");
+Serial.println(steptimer1);
+Serial.print("Step 2 - Temp.: ");
+Serial.print(target3);
+Serial.print("  Timer.: ");
+Serial.println(steptimer2);
+Serial.print("Step 3 - Temp.: ");
+Serial.print(target4);
+Serial.print("  Timer.: ");
+Serial.println(steptimer3);
+Serial.print("Step 4 - Temp.: ");
+Serial.print(target5);
+Serial.print("  Timer.: ");
+Serial.println(steptimer4);
+Serial.print("Mash Out Temp.: ");
+Serial.println(target6);
+Serial.print("Boil..............: ");
+Serial.print("  Timer.: ");
+Serial.println(steptimer5);
+  }
   }  
-}
+

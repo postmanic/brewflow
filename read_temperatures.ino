@@ -1,9 +1,6 @@
 /*
- * Copyright 2015 brewflow/Lars Rosenskjold
- *
- *
  * This file is part of brewflow.
- * 
+ *
  * brewflow is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -22,7 +19,8 @@
 
  void read_temperatures(){
   sensors.requestTemperatures(); 
-  temp1 = sensors.getTempCByIndex(0);
+  temp1 = debugtemp;
+  //temp1 = sensors.getTempCByIndex(0);
   delay(2);
   temp2 = sensors.getTempCByIndex(1); 
   delay(2);

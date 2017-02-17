@@ -1,9 +1,6 @@
 /*
- * Copyright 2015 brewflow/Lars Rosenskjold
- *
- *
  * This file is part of brewflow.
- * 
+ *
  * brewflow is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -46,11 +43,12 @@ void pump_set1(int wspeed1){
     pump1speed = (wspeed1 * 255) / 100;
     digitalWrite(pump1ctrl, LOW);    
     analogWrite(pump1pwm, pump1speed);
-    pump1state = HIGH;
+    pump1state = true;
+    delay(5);
   }
   else {
     analogWrite(pump1pwm, 0);
     pump1speed = 0;
-    pump1state = LOW;
+    pump1state = false;
   } 
 }

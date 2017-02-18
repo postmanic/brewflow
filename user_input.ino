@@ -38,19 +38,19 @@ void user_input(){
       case 9010:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Mash In
         target1 = bbuf_int;
       break;
-      case 9011:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 1
+      case 9011:  // Set step temp to bbuf. 9011xx where xx is temperature in celcius degrees. Step 1
         target2 = bbuf_int;
       break;
-      case 9012:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 2
+      case 9012:  // Set step temp to bbuf. 9012xx where xx is temperature in celcius degrees. Step 2
         target3 = bbuf_int;
       break;
-      case 9013:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 3
+      case 9013:  // Set step temp to bbuf. 9013xx where xx is temperature in celcius degrees. Step 3
         target4 = bbuf_int;
       break;
-      case 9014:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Step 4
+      case 9014:  // Set step temp to bbuf. 9014xx where xx is temperature in celcius degrees. Step 4
         target5 = bbuf_int;
       break;
-      case 9015:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Mash Out
+      case 9015:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Mash Out
         target6 = bbuf_int;
       break;
 

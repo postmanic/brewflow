@@ -15,36 +15,30 @@ public void VisKnapper(){
      .setRange(10,90)
      .setSliderMode(Slider.FLEXIBLE)
      ;
-
   
-  cp5.addSlider("MashStep1")
+  cp5.addSlider("Step1Temp")
      .setPosition(15,89)
-     .setCaptionLabel("Mash Step 1")
+     .setCaptionLabel("Step 1 TEMP")
      .setSize(150,30)
      .setRange(40,90)
      .setSliderMode(Slider.FLEXIBLE)
      ;
-  // add a horizontal sliders, the value of this slider will be linked
-  // to variable 'sliderValue' 
-  cp5.addSlider("MashStep2")
+
+  cp5.addSlider("Step2Temp")
      .setPosition(15,120)
-     .setCaptionLabel("Mash Step 2")
+     .setCaptionLabel("Step 2 TEMP")
      .setSize(150,30)
      .setRange(40,90)
      .setSliderMode(Slider.FLEXIBLE)
      ;
-  // add a horizontal sliders, the value of this slider will be linked
-  // to variable 'sliderValue' 
-  cp5.addSlider("MashStep3")
+
+  cp5.addSlider("Step3Temp")
      .setPosition(15,151)
-     .setCaptionLabel("Mash Step 3")
+     .setCaptionLabel("Step 3 TEMP")
      .setSize(150,30)
      .setRange(40,90)
      .setSliderMode(Slider.FLEXIBLE)
      ;     
-  
-  // add a horizontal sliders, the value of this slider will be linked
-  // to variable 'sliderValue' 
 
   cp5.addSlider("MashOutTemp")
      .setPosition(15,190)
@@ -54,28 +48,28 @@ public void VisKnapper(){
      .setSliderMode(Slider.FLEXIBLE)
      ;
      
-  cp5.addSlider("MLTSetTemp")
-     .setPosition(610,105)
-     .setCaptionLabel("Set Temp MLT")
+  cp5.addSlider("Step1Timer")
+     .setPosition(180,89)
+     .setCaptionLabel("Step 1 Timer")
      .setSize(150,30)
-     .setRange(20,90)
+     .setRange(0,100)
      .setSliderMode(Slider.FLEXIBLE)
      ;
 
      
-  cp5.addSlider("HLTSetTemp")
-     .setPosition(610,50)
-     .setCaptionLabel("Set Temp HLT")
+  cp5.addSlider("Step2Timer")
+     .setPosition(180,120)
+     .setCaptionLabel("Step 2 Timer")
      .setSize(150,30)
-     .setRange(20,90)
+     .setRange(0,100)
      .setSliderMode(Slider.FLEXIBLE)
      ;
 
-  cp5.addSlider("FERSetTemp")
-     .setPosition(610,160)
-     .setCaptionLabel("Set Temp FERMENTOR")
+  cp5.addSlider("Step3Timer")
+     .setPosition(180,151)
+     .setCaptionLabel("Step 3 Timer")
      .setSize(150,30)
-     .setRange(0,40)
+     .setRange(0,100)
      .setSliderMode(Slider.FLEXIBLE)
      ;
 
@@ -103,10 +97,10 @@ public void VisKnapper(){
      .setSliderMode(Slider.FLEXIBLE)
      ; 
  
-  cp5.addButton("ReadyReceived")
+  cp5.addButton("SetReceipe")
      .setValue(0)
      .setPosition(15,225)
-     .setCaptionLabel("GO")
+     .setCaptionLabel("Add")
      .setSize(40,20)
      .getCaptionLabel().align(CENTER,CENTER)
      ;  
@@ -155,29 +149,29 @@ public void VisKnapper(){
      ;     
 
   // create a new button with name 'buttonA'
-  cp5.addButton("StopPump3")
+  cp5.addButton("Mlock")
      .setValue(0)
-     .setPosition(454,195)
-     .setCaptionLabel("Stop")
-     .setSize(40,15)
+     .setPosition(610,67)
+     .setCaptionLabel("Malt added")
+     .setSize(80,15)
      .getCaptionLabel().align(CENTER,CENTER)
      ;
      
   // create a new button with name 'buttonA'
-  cp5.addButton("SetHLTTemp")
+  cp5.addButton("Ilock")
      .setValue(0)
-     .setPosition(610,85)
-     .setCaptionLabel("Set")
-     .setSize(40,15)
+     .setPosition(610,50)
+     .setCaptionLabel("WATER ADDED")
+     .setSize(80,15)
      .getCaptionLabel().align(CENTER,CENTER)
      ;
  
    // create a new button with name 'buttonA'
-  cp5.addButton("StopHLTTemp")
+  cp5.addButton("StartMash")
      .setValue(0)
-     .setPosition(652,85)
-     .setCaptionLabel("Off")
-     .setSize(40,15)
+     .setPosition(610,84)
+     .setCaptionLabel("Start Brewing")
+     .setSize(80,15)
      .getCaptionLabel().align(CENTER,CENTER)
      ;
 
@@ -216,143 +210,72 @@ public void VisKnapper(){
      ;
 
   // create a new button with name 'buttonA'
-  cp5.addButton("SetFerTemp")
+  cp5.addButton("DebugT1")
      .setValue(0)
      .setPosition(610,195)
-     .setCaptionLabel("Set")
+     .setCaptionLabel("T1")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
      ;  
 
   // create a new button with name 'buttonA'
-  cp5.addButton("StopFerTemp")
+  cp5.addButton("DebugT2")
      .setValue(0)
      .setPosition(652,195)
-     .setCaptionLabel("Off")
+     .setCaptionLabel("T2")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
      ;  
  
   cp5.getController("MashInTemp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0); 
-  cp5.getController("MashStep1").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0); 
-  cp5.getController("MashStep2").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
-  cp5.getController("MashStep3").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
+  cp5.getController("Step1Temp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0); 
+  cp5.getController("Step2Temp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
+  cp5.getController("Step3Temp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
   cp5.getController("MashOutTemp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
-  cp5.getController("MLTSetTemp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
-  cp5.getController("HLTSetTemp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
-  cp5.getController("FERSetTemp").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
+  
+  cp5.getController("Step1Timer").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
+  cp5.getController("Step2Timer").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
+  cp5.getController("Step3Timer").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
   cp5.getController("PumpSpeed1").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
   cp5.getController("PumpSpeed2").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
   cp5.getController("PumpSpeed3").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
 }
 
-void ReadyReceived() {
-  
-  if (mashstep == 5 ) {
-  }
-  else
-  { 
-  mashstep++;
-  }
-    
-  switch(mashstep)
-    {
-    case 1:
-     label13.setText("Waiting for GO!");    
-    break;
-    
-    case 2:
-     label13.setText("Add water to MLT");    
-    break;
-    
-    case 3:
-     label13.setText("Heating water to "+MashInTemp+"°");
-      myPort.write("9010"); 
-      myPort.write(str(MashInTemp));
-      myPort.write(lf);
-      
-    break;
-    
-    case 4:
-     // msg received from Arduino. temperature reached.
-     label13.setText("Add grain to MLT");        
-    break;
-    
-    case 5:
-    
-     // Brewer has added grain to hot water. 
-     
-     label13.setText("Mash step 1: Timer running. Pump running.");
-
-      //#ifdef d
-      //#elseif
-      d = new ControlTimer();
-      //#endif 
-      
-    break;
-    
-    case 6:
-     // Timer done
-     label13.setText("Mash step 2: Heating to "+MashInTemp);
-     // Send msg to Arduino. Heat to preset temp.     
-    break;    
-     
-    case 7:
-     // msg received from Arduino. temperature reached.
-     label13.setText("Mash step 2: Timer running.");
- 
-    break;     
-    
-    case 8:
-     // Timer done
-     label13.setText("Mash step 3: Heating to "+MashInTemp);
-     // Send msg to Arduino. Heat to preset temp.     
-    break;      
-    
-     case 9:
-     // msg received from Arduino. temperature reached.
-     label13.setText("Mash step 3: Timer running.");    
-    break;     
-    }
-  
-  
-}
-
-void StartPump1() {
-String pump1Speed = str((int)PumpSpeed1);
-  myPort.write("9020");
-  myPort.write(pump1Speed);
+void Ilock() {
+String ilock = "1";
+  myPort.write("9041");
+  myPort.write(ilock);
   myPort.write(lf);
+  delay(200);
 
 }
 
-void StopPump1() {
-String pump1Speed = str((int)0);
-  myPort.write("9020");
-  myPort.write(pump1Speed);
+void Mlock() {
+String mlock = "1";
+  myPort.write("9041");
+  myPort.write(mlock);
   myPort.write(lf);
- 
+  delay(200); 
 }
 
-void StartPump2() {
-String pump2Speed = str((int)PumpSpeed2);
-  myPort.write("9030");
-  myPort.write(pump2Speed);
+void StartMash() {
+
+  myPort.write("9050");
   myPort.write(lf);
-
+  delay(200); 
 }
 
-void StopPump2() {
-String pump2Speed = str((int)0);
-  myPort.write("9030");
-  myPort.write(pump2Speed);
+void DebugT1() {
+String debugt1 = str((int)PumpSpeed1);
+  myPort.write("2010");
+  myPort.write(debugt1);
   myPort.write(lf);
 }
 
-void StartPump3() {
-String pump3Speed = str((int)PumpSpeed3);
-  myPort.write("9040");
-  myPort.write(pump3Speed);
+void DebugT2() {
+String debugt2 = str((int)PumpSpeed2);
+  myPort.write("2020");
+  myPort.write(debugt2);
   myPort.write(lf);
 
 }
@@ -360,17 +283,63 @@ String pump3Speed = str((int)PumpSpeed3);
 // Event stop pump has been pressed. Event stops when pump stop
 // is received from Arduino.
 
-void StopPump3() {
-String pump3Speed = str((int)0);
-  myPort.write("9040");
-  myPort.write(pump3Speed);
+void SetReceipe() {
+
+String mashintemp = str((int)MashInTemp);
+String step1temp = str((int)Step1Temp);
+String step2temp = str((int)Step2Temp);
+String step3temp = str((int)Step3Temp);
+//String step4temp = str((int)Step4Temp);
+String mashouttemp = str((int)MashOutTemp);
+
+String step1timer = str((int)Step1Timer);
+String step2timer = str((int)Step2Timer);
+String step3timer = str((int)Step3Timer);
+  
+  
+  
+  myPort.write("9010");
+  myPort.write(mashintemp);
   myPort.write(lf);
- 
+  delay(200);
+  myPort.write("9011");
+  myPort.write(step1temp);
+  myPort.write(lf);
+  delay(200);
+  myPort.write("9012");
+  myPort.write(step2temp);
+  myPort.write(lf);
+  delay(200);
+  myPort.write("9013");
+  myPort.write(step3temp);
+  myPort.write(lf);
+ delay(200); 
+  //myPort.write("9014");
+  //myPort.write(mashouttemp);
+  //myPort.write(lf);
+ //delay(200); 
+  myPort.write("9015");
+  myPort.write(mashouttemp);
+  myPort.write(lf);
+ delay(200);
+  myPort.write("9021");
+  myPort.write(step1timer);
+  myPort.write(lf);
+ delay(200);  
+  myPort.write("9022");
+  myPort.write(step2timer);
+  myPort.write(lf);
+ delay(200);  
+   myPort.write("9023");
+  myPort.write(step3timer);
+  myPort.write(lf);
+ delay(200); 
+  
 }
 
-void SetHLTTemp() {
+void HLTSetTemp() {
 String HLTtemp = str((int)HLTSetTemp);
-  myPort.write("9010");
+  myPort.write("2010");
   myPort.write(HLTtemp);
   myPort.write(lf);
 
@@ -401,7 +370,7 @@ String MLTtemp = str((int)MLTSetTemp);
 
 }
 
-void dogWatch() {
-  myPort.write("1111");
-  myPort.write(lf);
-}
+//void dogWatch() {
+//  myPort.write("1111");
+//  myPort.write(lf);
+//}

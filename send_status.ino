@@ -18,7 +18,7 @@
 void send_status(int tempupdate){
   if (millis() >= (lastupdatestat + tempupdate)){
     lastupdatestat =  millis();
-   // int nop[] = {23, temp, temp1, temp2, temp3, temp4, target1, target2, target3, target4, target5, target6}; 
-   // send_data(1010, nop); 
+   int nop[] = {10, temp, temp1, temp2, temp3, temp4, vrg, intensity, pump1state, pump1speed}; 
+   send_data(1010, nop);  
   }
 }

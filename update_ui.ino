@@ -44,27 +44,42 @@ void update_ui(int tempupdate){
   if (ilock == true && step_x == 0){
     Serial.println("|             BrewFlow v0.1b               |");
     Serial.println("|              System Ready                |");
+    Serial.print("1030,");
+    Serial.print("2,");
+    Serial.println("System Ready");
   }
   
   if (ilock == false && step_x == 0){ 
     Serial.println("|             BrewFlow v0.1b               |");
     Serial.println("|              !!ADD WATER!!               |");
+    Serial.print("1030,");
+    Serial.print("2,");
+    Serial.println("Add water");
   }
 
   if (ilock == true && step_x == 1){ 
     Serial.println("|                 Mash In                  |");
     Serial.println("|           Reaching Mash In Temp          |");
+    Serial.print("1030,");
+    Serial.print("2,");
+    Serial.println("Reaching Mash In Temp");
   }
 
   if (ilock == true && step_x == 2){ 
     Serial.println("|                 Mash In                 |");
     Serial.println("|     ** Add ingredients and continue **  |");
+    Serial.print("1030,");
+    Serial.print("2,");
+    Serial.println("** Add ingredients and continue **");   
   }
 
 
   if (ilock == true && step_x == 3){ 
     Serial.println("|                 Step 1                  |");
     Serial.println("|          ** Timer running  **           |");
+    Serial.print("1030,");
+    Serial.print("2,");
+    Serial.println("** Timer running **");  
   }
 
   if (ilock == true && step_x == 4){ 

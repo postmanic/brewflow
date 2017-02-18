@@ -26,7 +26,7 @@ public void createGUI(){
   
   // Temp 1 readout MLT
   label3 = new GLabel(this, 536, 440, 60, 18);
-  label3.setText("...");
+  label3.setText("T1");
   label3.setTextBold();
   label3.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label3.setOpaque(true);
@@ -40,7 +40,7 @@ public void createGUI(){
   
   // Temp 2 reaout MLT
   label6 = new GLabel(this, 536, 460, 60, 18);
-  label6.setText("...");
+  label6.setText("T2");
   label6.setTextBold();
   label6.setLocalColorScheme(GCScheme.BLUE_SCHEME);
   label6.setOpaque(true);
@@ -115,8 +115,8 @@ public void createGUI(){
   //label16.setLocalColorScheme(GCScheme.RED_SCHEME);
   label16.setOpaque(true); 
   
-  label9 = new GLabel(this, 15, 10, 120, 18);
-  label9.setText("AUTOMASH");
+  label9 = new GLabel(this, 15, 10,50, 18);
+  label9.setText("Receipe");
   //label9.setLocalColorScheme(GCScheme.RED_SCHEME);
   label9.setOpaque(true);
 
@@ -196,4 +196,3 @@ GToggleGroup togGroup2;
 GOption option1; 
 GOption option2; 
 GOption option3; 
-

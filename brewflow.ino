@@ -32,13 +32,13 @@
 //#define pump2pwm  (7)     // Pump 2 PWM.
 #define heat1 (9)         // MLT heater PWM.
 //#define heat2 (10)        // HLT heater PWM.
-#define SECS_PER_MIN  (60UL)
-#define SECS_PER_HOUR (3600UL)
-#define SECS_PER_DAY  (SECS_PER_HOUR * 24L)
-#define numberOfSeconds(_time_) (_time_ % SECS_PER_MIN)
-#define numberOfMinutes(_time_) ((_time_ / SECS_PER_MIN) % SECS_PER_MIN)
-#define numberOfHours(_time_) (( _time_% SECS_PER_DAY) / SECS_PER_HOUR)
-#define elapsedDays(_time_) ( _time_ / SECS_PER_DAY)
+//#define SECS_PER_MIN  (60UL)
+//#define SECS_PER_HOUR (3600UL)
+//#define SECS_PER_DAY  (SECS_PER_HOUR * 24L)
+//#define numberOfSeconds(_time_) (_time_ % SECS_PER_MIN)
+//#define numberOfMinutes(_time_) ((_time_ / SECS_PER_MIN) % SECS_PER_MIN)
+//#define numberOfHours(_time_) (( _time_% SECS_PER_DAY) / SECS_PER_HOUR)
+//#define elapsedDays(_time_) ( _time_ / SECS_PER_DAY)
 #define TWENTY_SECONDS (400)
 #define TEN_SECONDS (200)
 #define FIVE_SECONDS (100)
@@ -48,8 +48,8 @@
 #define GMA_LLIM (0.0)
 
 double kc = 1.2, ti = 2.5, td = 0.5, ts = 5, k_lpf, k0, k1, k2, k3, lpf1, lpf2, pp, pi, pd;
-double temp, temp1, temp2, temp3, temp4, pump1speed, pump2speed, intensity, pumptimer, debugtemp1, debugtemp2;
-double target; // Target is the PID parameter which must be maintained.
+double temp, temp1, temp2, temp3, temp4, pump1speed, intensity, pumptimer, debugtemp1, debugtemp2;
+double target;  // Target is the PID parameter which must be maintained.
 double target1; // Mash In temperature set by user.
 double target2; // Step 1 temperature set by user.
 double target3; // Step 2 temperature set by user.
@@ -57,12 +57,14 @@ double target4; // Step 3 temperature set by user.
 double target5; // Step 4 temperature set by user.
 double target6; // Mash Out temperature set by user.
 double target7; // Boil temperature set by system.
-double steptimer; // 
+
+double steptimer;  // 
 double steptimer1; // Step 1 timer set by user.
 double steptimer2; // Step 2 timer set by user. 
 double steptimer3; // Step 3 timer set by user.
 double steptimer4; // Step 4 timer set by user.
 double steptimer5; // Boil timer set by user.
+
 static double ek_1, ek_2, xk_1, xk_2, yk_1, yk_2, lpf_1, lpf_2;
 boolean stringComplete = false;
 boolean ilock = false; // Interlock. Can be released by user acknowledging water has been filled into tank.
@@ -88,8 +90,8 @@ void loop(void) {
 
   read_temperatures();
   update_pid();
-  update_ui(2000);
-  send_status(10000); 
+  update_ui(5000);
+  send_status(500); 
   user_input();
 
   switch (step_x) {
@@ -129,22 +131,33 @@ void loop(void) {
         }  
       }
       else {
+        
+        //
         // Pumpe slukkes
+        //
+        
         if (pump1state == true){
           pump_set1(0);
           pumpvent++;
         }
       }
 
+      //
       // Når temperturen er nået og der er ventileret skal vi videre til næste trin.
+      //
+      
       if (temp >= target1 && step_x == 1 && ilock == true && pumpvent == 2){
         step_x = 2;
       } 
     break; 
 
+    //
     // Der er ventileret og Mash In temperatur er nået, nu skal der tilsættes malt og omrøres.
     // Når der er tilsat malt og omrørt skal bruger acceptere.
-    case 2: // Mash In.
+    // Derefter videre til næste step.
+    //
+    
+    case 2:
       if (step_x == 2 && ilock == true && mlock == true){
         steptimer = (millis()/1000) + (60 * steptimer1);           
         step_x = 3;

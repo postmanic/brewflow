@@ -7,11 +7,10 @@
    PGraphics pg;
    ControlP5 cp5;
    Textlabel t;
-   ControlTimer c, d, MashStep1Timer, MashStep2Timer, MashStep3Timer;
-   int HLTSetTemp, MLTSetTemp=70, FERSetTemp = 20, MashInTemp, Step1Temp, Step2Temp, Step3Temp, MashOutTemp, PumpSpeed1 = 0, PumpSpeed2 = 0, PumpSpeed3 = 0;  
-   int Step1Timer,Step2Timer,Step3Timer;
-   
-   
+
+   int HLTSetTemp, MLTSetTemp=70, FERSetTemp = 20, MashInTemp, Step1Temp, Step2Temp, Step3Temp, Step4Temp, MashOutTemp, BoilTemp, PumpSpeed1 = 0, PumpSpeed2 = 0, PumpSpeed3 = 0;  
+   int Step1Timer,Step2Timer,Step3Timer, Step4Timer, BoilTimer;
+  
    int lf = 10, val;  
    int mashstep = 0;
    int dogwatch, linewatch;
@@ -41,74 +40,43 @@ void serialEvent(Serial myPort) {
 
   switch(command)
     {
-    case 1030:
-    
-    String line1 = myArray[2];
-    label13.setText(line1);
-    break;  
-    
     case 1010:
 
-      float temp = float(myArray[1]);      
-      float temp1 = float(myArray[2]); 
-      float temp2 = float(myArray[3]); 
-      float temp3 = float(myArray[4]);    
-      float temp4 = float(myArray[5]);
-      float pump1speed = float(myArray[10]);
-      float intensity = float(myArray[8]);
-      
-      //int target_temp_1 = int(myArray[8]);      
-      //int target_temp_2 = int(myArray[9]);
-     // int heat_1 = int(myArray[14])*20;
-      //int heat_2 = int(myArray[15])*20;      
-      
-     int vrg = int(myArray[7]);      
+      int temp      = int (myArray[2]);      
+      int temp1     = int (myArray[3]); 
+      int temp2     = int (myArray[4]); 
+      int temp3     = int (myArray[5]);    
+      int temp4     = int (myArray[6]);
+      int ilock     = int (myArray[7]);
+      int mlock     = int (myArray[8]);
+      int vrg       = int (myArray[9]);
+      int intensity = int (myArray[10]);
+      int pump1state = int (myArray[11]);
+      int pump1speed = int (myArray[12]);
+      int updatestatus = int (myArray[13]);
+
        if (vrg > 0){
-         label5.setLocalColorScheme(GCScheme.RED_SCHEME);  
+         label5.setLocalColorScheme(GCScheme.RED_SCHEME);
+         label5.setText(int(intensity)+"%");        
       }
       else
       {
          label5.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-      }
-     
-   //   int vrg2 = int(myArray[22]);
-   //   if (vrg2 > 0){
-   //      label5.setLocalColorScheme(GCScheme.RED_SCHEME);  
-   //   }
-   //   else
-   //   {
-  //       label5.setLocalColorScheme(GCScheme.CYAN_SCHEME);
-   //   }      
-      float pump1state = (float(myArray[9])/255)*100;
-      if (pump1state > 0){
+         label5.setText("off");
+    }
+    
+      if (pump1state == 1) {
          label12.setLocalColorScheme(GCScheme.RED_SCHEME);
+         label12.setText(str(pump1speed)+"%"); 
       }
-      else
-      {
-      label12.setLocalColorScheme(GCScheme.CYAN_SCHEME);  
+      else {
+        label12.setLocalColorScheme(GCScheme.BLUE_SCHEME);
+        label12.setText("off");        
       }
-   //   float pump_2_speed = (float(myArray[17])/255)*100;
-   //         if (pump_2_speed > 0){
-   //      label12.setLocalColorScheme(GCScheme.RED_SCHEME);
-   //   }
-   //   else
-   //   {
-   //   label12.setLocalColorScheme(GCScheme.CYAN_SCHEME);  
-   //   }
-   //   float pump_3_speed = (float(myArray[18])/255)*100;      
      
-      
-     // float pump1speed = (float(myArray[9])/255)*100;
-      //label2.setText(str(target_temp_1)+"°"); // pot 1 temp 1
-      //label1.setText(str(target_temp_2)+"°"); // pot 1 temp 1
-      //label13.setText(str(line1));        // pot 1 temp 1
-      //label4.setText(str(heat_1)+" W");   //HLT heater
-      label5.setText(int(intensity)+"%");   //MLT heater
-      label6.setText(str(temp3)+"°");        // pot 1 temp 2     
-      label7.setText(str(temp1)+"°");        // pot 1 temp 1
-      label3.setText(str(temp2)+"°");        // pot 1 temp 1
-      //label11.setText(str(int(pump1speed))+"%"); //Pumpe 1 hastighed 
-      label12.setText(str(int(pump1speed))+"%"); //Pumpe 2 hastighed      
+      label1.setText(str(temp)+"°");      
+      label3.setText(str(temp1)+"°"); 
+      label6.setText(str(temp2)+"°");   
     break;
     }
   }

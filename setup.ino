@@ -31,5 +31,5 @@ void setup() {
   analogWrite(heat1, LOW);
   
   Serial.begin(57600);
-  Serial.println("BrewFlow Ready!");
+  //Serial.println("BrewFlow Ready!");
 }

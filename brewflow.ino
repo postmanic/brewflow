@@ -32,6 +32,7 @@
 //#define pump2pwm  (7)     // Pump 2 PWM.
 #define heat1 (9)         // MLT heater PWM.
 //#define heat2 (10)        // HLT heater PWM.
+
 //#define SECS_PER_MIN  (60UL)
 //#define SECS_PER_HOUR (3600UL)
 //#define SECS_PER_DAY  (SECS_PER_HOUR * 24L)
@@ -40,47 +41,32 @@
 //#define numberOfHours(_time_) (( _time_% SECS_PER_DAY) / SECS_PER_HOUR)
 //#define elapsedDays(_time_) ( _time_ / SECS_PER_DAY)
 #define TWENTY_SECONDS (400)
-#define TEN_SECONDS (200)
-#define FIVE_SECONDS (100)
-#define ONE_SECOND (20)
+//#define TEN_SECONDS (200)
+//#define FIVE_SECONDS (100)
+//#define ONE_SECOND (20)
 #define T_50MSEC (50)
-#define GMA_HLIM (100.0)
-#define GMA_LLIM (0.0)
 
-double kc = 1.2, ti = 2.5, td = 0.5, ts = 5, k_lpf, k0, k1, k2, k3, lpf1, lpf2, pp, pi, pd;
-double temp, temp1, temp2, temp3, temp4, pump1speed, intensity, pumptimer, debugtemp1, debugtemp2;
-double target;  // Target is the PID parameter which must be maintained.
-double target1; // Mash In temperature set by user.
-double target2; // Step 1 temperature set by user.
-double target3; // Step 2 temperature set by user.
-double target4; // Step 3 temperature set by user.
-double target5; // Step 4 temperature set by user.
-double target6; // Mash Out temperature set by user.
-double target7; // Boil temperature set by system.
+double kc = 1.2, ti = 2.5, td = 0.5, ts = 5;
+double k_lpf, k0, k1, k2, k3, lpf1, lpf2, pp, pi, pd;
+double ek, ek_1, ek_2, xk_1, xk_2, yk_1, yk_2;
 
-double steptimer;  // 
-double steptimer1; // Step 1 timer set by user.
-double steptimer2; // Step 2 timer set by user. 
-double steptimer3; // Step 3 timer set by user.
-double steptimer4; // Step 4 timer set by user.
-double steptimer5; // Boil timer set by user.
+byte pump1speed, intensity, debugtemp1, debugtemp2;
+byte target[8];
+int steptimer[6];
+byte temp[5];
 
-static double ek_1, ek_2, xk_1, xk_2, yk_1, yk_2, lpf_1, lpf_2;
 boolean stringComplete = false;
 boolean ilock = false; // Interlock. Can be released by user acknowledging water has been filled into tank.
 boolean mlock = false; // Interlock. Can be released by user acknowledging malt has been added to tank.
 boolean vrg = false; // Switch for turning PID on and off.
 boolean pump1state = false; // If true pump 1 is running.
-boolean pump2state = false; // If true pump 2 is running. 
-boolean mlthState;
-boolean mlttState;
-boolean hlthState;
-boolean hlttState;
-int commands = 0, ticks, step_x, pumpvent;
-String inputString = "", bbuf = "", cbuf = "";
-long lastupdatestat; // Holds time for when status was sent to webclient.
-long lastupdateui; // Holds time for when UI received the last update.
 
+int ticks, step_x, pumpvent, pumptimer;
+String inputString = "", bbuf = "", cbuf = "";
+int lastupdatestatus; // Holds time for when status was sent to webclient.
+int lastupdatesettings; // Holds time for when status was sent to webclient.
+int lastupdateui; // Holds time for when UI received the last update.
+int lastupdatepid; // Holds time for when UI received the last update.
 // Control setup
 
 OneWire oneWire(One_Wire_Bus);
@@ -90,8 +76,9 @@ void loop(void) {
 
   read_temperatures();
   update_pid();
-  update_ui(5000);
-  send_status(500); 
+  //update_ui(10);
+  send_status(10); 
+  //send_settings(20);
   user_input();
 
   switch (step_x) {
@@ -106,7 +93,7 @@ void loop(void) {
       // Sæt PID styring til Mash In temperatur.
       //
       
-      target = target1;
+      target[0] = target[1];
 
       //
       // PID slåes til, hvorefter temperaturen styres automatisk.
@@ -124,7 +111,7 @@ void loop(void) {
       // Jeg afprøver når jeg har modtaget slanger.
       // 
       
-      if ((millis() < (pumptimer + 5000)) || (millis() > (pumptimer + 10000) && millis() < (pumptimer + 15000)) ){
+      if ((millis()/1000 < (pumptimer + 5)) || (millis()/1000 > (pumptimer + 10) && millis()/1000 < (pumptimer + 15)) ){
         // hvis ikke pumpen er tændt skal den tændes
         if (pump1state == false){
           pump_set1(100);
@@ -146,7 +133,7 @@ void loop(void) {
       // Når temperturen er nået og der er ventileret skal vi videre til næste trin.
       //
       
-      if (temp >= target1 && step_x == 1 && ilock == true && pumpvent == 2){
+      if (temp[0] >= target[1] && step_x == 1 && ilock == true && pumpvent == 2){
         step_x = 2;
       } 
     break; 
@@ -159,7 +146,7 @@ void loop(void) {
     
     case 2:
       if (step_x == 2 && ilock == true && mlock == true){
-        steptimer = (millis()/1000) + (60 * steptimer1);           
+        steptimer[0] = (millis()/1000) + (60 * steptimer[1]);           
         step_x = 3;
         vrg = 0;
       }   
@@ -168,13 +155,13 @@ void loop(void) {
 
     case 3: // Step 1.
       vrg = 1;
-      target = target2;
-      if (millis() < (steptimer * 1000) && step_x == 3){
+      target[0] = target[2];
+      if (millis()/1000 < (steptimer[0]) && step_x == 3){
       // Timer running
       }
       else {
       // Step done
-      steptimer = millis()/1000 + (60 * steptimer2);
+      steptimer[0] = millis()/1000 + (60 * steptimer[2]);
       step_x = 4;
       vrg = 0;
       }
@@ -184,13 +171,13 @@ void loop(void) {
      
      case 4: // Step 2.
       vrg = 1;
-      target = target3;
-      if (millis() < (steptimer * 1000) && step_x == 4){
+      target[0] = target[3];
+      if (millis()/1000 < (steptimer[0]) && step_x == 4){
       // Timer running
       }
       else {
       // Step done
-      steptimer = millis()/1000 + (60 * steptimer3);
+      steptimer[0] = millis()/1000 + (60 * steptimer[3]);
       step_x = 5;
       vrg = 0;
       }
@@ -199,13 +186,13 @@ void loop(void) {
     
      case 5: // Step 3.
       vrg = 1;
-      target = target4;
-      if (millis() < (steptimer * 1000) && step_x == 5){
+      target[0] = target[4];
+      if (millis()/1000 < (steptimer[0]) && step_x == 5){
       // Timer running
       }
       else {
       // Step done
-      steptimer = millis()/1000 + (60 * steptimer4);
+      steptimer[0] = millis()/1000 + (60 * steptimer[4]);
       step_x = 6;
       vrg = 0;
       }
@@ -213,13 +200,13 @@ void loop(void) {
     
       case 6: // Step 4.
       vrg = 1;
-      target = target5;
-      if (millis() < (steptimer * 1000) && step_x == 6){
+      target[0] = target[5];
+      if (millis() < (steptimer[0] * 1000) && step_x == 6){
       // Timer running
       }
       else {
       // Step done
-      steptimer = millis()/1000 + (60 * steptimer5);
+      steptimer[0] = millis()/1000 + (60 * steptimer[5]);
       step_x = 7;
       vrg = 0;
       }

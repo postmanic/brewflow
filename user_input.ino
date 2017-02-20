@@ -23,56 +23,62 @@ void user_input(){
     long cbuf_int = cbuf.toInt(); // needs checking for correct input and reason for converting to integer is unknown
     switch (cbuf_int) {
       
-      case 1111: // System will reset AVR if no response is received from brewflowGUI.
-        wdt_reset();
-      break;  
-
-      case 9000:  // verbose 90001 is on and 90000 is off
-        commands = bbuf_int;
-      break;
+      //case 1111: // System will reset AVR if no response is received from brewflowGUI.
+        //wdt_reset();
+      //break;
       
       //
-      // user input for setting step temperatures.
+      // user input for setting step parametres.
       //
       
       case 9010:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Mash In
-        target1 = bbuf_int;
-      break;
+        target[1] = bbuf_int;
+        send_settings();
+        break;
       case 9011:  // Set step temp to bbuf. 9011xx where xx is temperature in celcius degrees. Step 1
-        target2 = bbuf_int;
-      break;
+        target[2] = bbuf_int;
+        send_settings();
+        break;
       case 9012:  // Set step temp to bbuf. 9012xx where xx is temperature in celcius degrees. Step 2
-        target3 = bbuf_int;
-      break;
+        target[3] = bbuf_int;
+        send_settings();
+        break;
       case 9013:  // Set step temp to bbuf. 9013xx where xx is temperature in celcius degrees. Step 3
-        target4 = bbuf_int;
-      break;
+        target[4] = bbuf_int;
+        send_settings();
+        break;
       case 9014:  // Set step temp to bbuf. 9014xx where xx is temperature in celcius degrees. Step 4
-        target5 = bbuf_int;
-      break;
+        target[5] = bbuf_int;
+        send_settings();
+        break;
       case 9015:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Mash Out
-        target6 = bbuf_int;
-      break;
-
-      //
-      // User input for setting step timers
-      //
-      
+        target[6] = bbuf_int;
+        send_settings();
+        break;
+      case 9016:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Boil
+        target[7] = bbuf_int;
+        send_settings();
+        break;          
       case 9021:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 1
-        steptimer1 = bbuf_int;
-      break;
+        steptimer[1] = bbuf_int;
+        send_settings();
+        break;
       case 9022:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 2
-        steptimer2 = bbuf_int;
-      break;
+        steptimer[2] = bbuf_int;
+        send_settings();
+        break;
       case 9023:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 3
-        steptimer3 = bbuf_int;
-      break;
+        steptimer[3] = bbuf_int;
+        send_settings();
+        break;
       case 9024:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 4
-        steptimer4 = bbuf_int;
-      break;      
-      case 9030:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Boil
-        steptimer5 = bbuf_int;
-      break;   
+        steptimer[4] = bbuf_int;
+        send_settings();
+        break;      
+      case 9025:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Boil
+        steptimer[5] = bbuf_int;
+        send_settings();
+        break;   
 
       //
       // Set temperature sensor output. Debug option.
@@ -80,10 +86,10 @@ void user_input(){
 
       case 2010:  // Indstilling af debug temp. Simulerer temp probe1
         debugtemp1 = bbuf_int;
-      break;        
+        break;        
       case 2020:  // Indstilling af debug temp. Simulerer temp probe1
         debugtemp2 = bbuf_int;
-      break;  
+        break;  
 
       //
       // interlocks that needs to be input by user.
@@ -92,22 +98,24 @@ void user_input(){
       case 9041:  // User acknowledges that there is water in tank. No water will damage equipment
         if (bbuf_int == 1){
           ilock = true;
+          send_settings();
         }
-      break;
+        break;
       case 9042:  // User acknowledges that there is water in tank. No water will damage equipment
         if (bbuf_int == 2 && step_x == 2 && ilock == true){
           mlock = true;
+          send_settings();
         }
-      break;
+        break;
 
       //
       // Start brewing.
       //
 
       case 9050: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
-        if (ilock == true &&  target1 > 0) {
+        if (ilock == true &&  target[1] > 0) {
           step_x = 1;
-          pumptimer =  millis();
+          pumptimer =  millis()/1000;
           delay(2);
         }
       break; 
@@ -116,19 +124,7 @@ void user_input(){
       // Manuel control of system
       //
       
-      case 9072: // Set pump1 to 'ON' and PWM to bbuf. 9020xxx where xxx is motor turn in percentage
-        pump_set1(bbuf_int);
-      break;
-      case 9073: // Set pump1 to 'OFF'.
-        pump_set1(0);
-      break;
-      case 9074: // Set MLT PID to 'ON' and set temp to bbuf. 9030xxx where xxx is temperature in celcius degrees. Manuel control  
-        vrg = 1;
-        target1 = bbuf_int;
-      break;
-      case 9075: // Set MLT PID to off. 
-        vrg = 0;
-      break; 
+
 
       //
       // Reset system

@@ -16,42 +16,36 @@
  */
 
 void init_pid() {
- 
-  ticks = (int)((ts * 1000.0) / T_50MSEC);
-  if (ticks > TWENTY_SECONDS) {
-    ticks = TWENTY_SECONDS;
-  }
   if (ti == 0.0) {
     k0 = 0.0;
   }
   else {
-    k0 = kc * ts / ti;
+   k0 = kc * ts / ti;
   }
   k1 = kc * td / ts;
-  lpf1 = (2.0 * k_lpf - ts) / (2.0 * k_lpf + ts);
-  lpf2 = ts / (2.0 * k_lpf + ts);
 }
 
 void update_pid() {
-  double ek;
-  double lpf;
-  ek = target - temp1;
-  if (vrg){
-    pp = kc * (xk_1 - temp1);
-    pi = k0 * ek;
-    pd = k1 * (2.0 * xk_1 - temp1 - xk_2);
-    intensity += pp + pi + pd;
+  if (millis()/1000 >= (lastupdatepid + 20)){
+    lastupdatepid =  millis()/1000;
+    ek = target[0] - temp[1];
+    if (vrg){
+      pp = kc * (xk_1 - temp[1]);
+      pi = k0 * ek;
+      pd = k1 * (2.0 * xk_1 - temp[1] - xk_2);
+      intensity += pp + pi + pd;
+    }
+    else { 
+      intensity = pp = pi = pd = 0.0; 
+    }
+    xk_2 = xk_1;
+    xk_1 = temp[1];
+    if (intensity > 100) { 
+      intensity = 100;
+    }
+    else if (intensity < 0) {
+      intensity = 0;
+    }
+    analogWrite(heat1, intensity);
   }
-  else { 
-    intensity = pp = pi = pd = 0.0; 
-  }
-  xk_2 = xk_1;
-  xk_1 = temp1;
-  if (intensity > GMA_HLIM) {
-    intensity = GMA_HLIM;
-  }
-  else if (intensity < GMA_LLIM) {
-    intensity = GMA_LLIM;
-  }
-  analogWrite(heat1, intensity);
-} 
+}

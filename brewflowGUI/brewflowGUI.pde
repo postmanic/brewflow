@@ -1,13 +1,9 @@
    
    void setup() {
       img = loadImage("tank.png");
-     // ControlTimer c;
-      //ControlTimer d;
-      
       size(800, 800); 
       createGUI();
       VisKnapper();
-      //int PortSelected=1;
       SerialPortSetup();
       myPort.bufferUntil(lf);
   }

@@ -77,7 +77,7 @@ void loop(void) {
   read_temperatures();
   update_pid();
   //update_ui(10);
-  send_status(10); 
+  send_status(1); 
   //send_settings(20);
   user_input();
 
@@ -90,21 +90,14 @@ void loop(void) {
     case 1:
 
       //
-      // Sæt PID styring til Mash In temperatur.
-      //
-      
-      target[0] = target[1];
-
-      //
       // PID slåes til, hvorefter temperaturen styres automatisk.
       // Hvis der checkes skal der også være en handling hvis ikke alt er normalt. WDT reset.
       // Inden PID styring tændes dobbeltcheckes at bruger har accepteret at der er påfyldt vand.
       //
       
-      if (ilock == true) {
+      if (ilock == true && mlock == false) {
       vrg = 1; 
-      }
-      
+            
       //  
       // Ventilering af pumpe efter der er påfyldt vand. Der ventileres 5 sekunder, pause 5 sekunder, ventilering 5 sekunder.
       // Hvornår skal der ventileres. Bedste bud er når der er påfyldt vand men det bedtyder at man også skal huske at flytte slanger.
@@ -133,9 +126,9 @@ void loop(void) {
       // Når temperturen er nået og der er ventileret skal vi videre til næste trin.
       //
       
-      if (temp[0] >= target[1] && step_x == 1 && ilock == true && pumpvent == 2){
+      if (temp[1] >= target[1] && step_x == 1 && ilock == true && pumpvent == 2){
         step_x = 2;
-      } 
+      }} 
     break; 
 
     //
@@ -145,7 +138,7 @@ void loop(void) {
     //
     
     case 2:
-      if (step_x == 2 && ilock == true && mlock == true){
+      if (ilock == true && mlock == true){
         steptimer[0] = (millis()/1000) + (60 * steptimer[1]);           
         step_x = 3;
         vrg = 0;

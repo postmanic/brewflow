@@ -53,7 +53,7 @@ void user_input(){
         break;
       case 9015:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Mash Out
         target[6] = bbuf_int;
-        send_settings();
+        //send_settings();
         break;
       case 9016:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Boil
         target[7] = bbuf_int;
@@ -96,15 +96,17 @@ void user_input(){
       //
 
       case 9041:  // User acknowledges that there is water in tank. No water will damage equipment
-        if (bbuf_int == 1){
+        if (bbuf_int == 1 && ilock == false && target[1] > 40 && step_x == 0){
+          step_x = 1;
+          temp[0] = target[1];
+          pumptimer =  millis()/1000;
+          delay(2);
           ilock = true;
-          send_settings();
         }
         break;
       case 9042:  // User acknowledges that there is water in tank. No water will damage equipment
         if (bbuf_int == 2 && step_x == 2 && ilock == true){
           mlock = true;
-          send_settings();
         }
         break;
 
@@ -113,8 +115,9 @@ void user_input(){
       //
 
       case 9050: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
-        if (ilock == true &&  target[1] > 0) {
+        if (ilock == true && target[1] > 0 && step_x == 0) {
           step_x = 1;
+          temp[0] = target[1];
           pumptimer =  millis()/1000;
           delay(2);
         }

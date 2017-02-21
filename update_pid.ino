@@ -28,7 +28,7 @@ void init_pid() {
 void update_pid() {
   if (millis()/1000 >= (lastupdatepid + 20)){
     lastupdatepid =  millis()/1000;
-    ek = target[0] - temp[1];
+    ek = temp[0] - temp[1];
     if (vrg){
       pp = kc * (xk_1 - temp[1]);
       pi = k0 * ek;

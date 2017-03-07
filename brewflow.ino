@@ -52,36 +52,32 @@
 
 byte pump_speed, intensity;
 
-//
-// target[8]
-//
-// temperatur mellem 0 og 255 grader celsius/fahrenheit
-// 
-// [0] Current setpoint temperature for PID
-// [1] Mash In setpoint temperature
-// [2] Step 1 setpoint temperature
-// [3] Step 2 setpoint temperature
-// [4] Step 3 setpoint temperature
-// [5] Step 4 setpoint temperature
-// [6] Mash out setpoint temperature
-// [7] Boil setpoint temperature
-//
-
 byte target[8];
 
 //
-// steptimer[6]
+// receipe[18]
 //
-// tid mellem 0 og 65254 sekunder
-//
-// [0] Current setpoint timer
-// [1] Step 1 setpoint timer
-// [2] Step 2 setpoint timer
-// [3] Step 3 setpoint timer
-// [4] Step 4 setpoint timer
-// [5] Boil setpoint timer
+// [0] MashIn temperature
+// [1] Step1 temperature
+// [2] Step2 temperature
+// [3] Step3 temperature
+// [4] Step4 temperature
+// [5] MashOut temperature
+// [6] Boil temperature
+// [7] MashIn timer
+// [8] Step1 timer
+// [9] Step2Rise timer
+// [10] Step2 timer
+// [11] Step3Rise timer
+// [12] Step3 timer
+// [13] Step4Rise timer
+// [14] Step4 timer
+// [15] MashOutRise timer
+// [16] MashOut timer
+// [17] Boil timer
 //
 
+int receipe[18];
 int steptimer[6];
 
 int temp_sens;
@@ -89,10 +85,10 @@ float temp[5];
 byte debugtemp1, debugtemp2;
 
 boolean stringComplete = false;
-boolean ilock = false; // Interlock. Can be released by user acknowledging water has been filled into tank.
-boolean mlock = false; // Interlock. Can be released by user acknowledging malt has been added to tank.
-boolean vrg = false; // Switch for turning PID on and off.
-boolean pump1state = 0; // If true pump 1 is running.
+boolean ilock = false;           // Interlock. Can be released by user acknowledging water has been filled into tank.
+boolean mlock = false;           // Interlock. Can be released by user acknowledging malt has been added to tank.
+boolean vrg   = false;           // Switch for turning PID on and off.
+boolean pump1state = 0;          // If true pump 1 is running.
 
 int ticks, step_x, pumpvent, pumptimer, wspeed1;
 String inputString = "", bbuf = "", cbuf = "";
@@ -199,6 +195,8 @@ void loop(void) {
         target[0] = target[2];       
         step_x = 3;
         vrg = 1;
+        pump1state = 1;
+        wspeed1 = 60;
       }   
     break; 
 

@@ -20,8 +20,8 @@ void send_status(int tempupdate){
     lastupdatestatus =  millis()/1000;
    int nop[] = {13, temp[0]*10, temp[1]*10, temp[2]*10, ilock, mlock, vrg, intensity, pump1state, wspeed1, step_x, target[0], lastupdatestatus}; 
    send_data(1010, nop);
-   //int pop[] = {15, target[0], target[1], target[2], target[3], target[4], target[5], target[6], target[7], steptimer[0], steptimer[1], steptimer[2], steptimer[3], steptimer[4], steptimer[5]}; 
-   //send_data(1011, pop);   
+   int pop[] = {15, target[0], target[1], target[2], target[3], target[4], target[5], target[6], target[7], steptimer[0], steptimer[1], steptimer[2], steptimer[3], steptimer[4], steptimer[5]}; 
+   send_data(1011, pop);   
   }
 }
 

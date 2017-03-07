@@ -1,4 +1,6 @@
 
+import g4p_controls.*;
+
 public void createGUI(){
   
   G4P.messagesEnabled(false);

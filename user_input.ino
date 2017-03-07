@@ -42,47 +42,36 @@ void user_input(){
       
       case 9010:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Mash In
         target[1] = bbuf_int;
-        send_settings();
         break;
       case 9011:  // Set step temp to bbuf. 9011xx where xx is temperature in celcius degrees. Step 1
         target[2] = bbuf_int;
-        send_settings();
         break;
       case 9012:  // Set step temp to bbuf. 9012xx where xx is temperature in celcius degrees. Step 2
         target[3] = bbuf_int;
-        send_settings();
         break;
       case 9013:  // Set step temp to bbuf. 9013xx where xx is temperature in celcius degrees. Step 3
         target[4] = bbuf_int;
-        send_settings();
         break;
       case 9014:  // Set step temp to bbuf. 9014xx where xx is temperature in celcius degrees. Step 4
         target[5] = bbuf_int;
-        send_settings();
          break;
       case 9015:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Mash Out
         target[6] = bbuf_int;
-        send_settings();
          break;
       case 9016:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Boil
         target[7] = bbuf_int;
-        send_settings();
         break;          
       case 9021:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 1
         steptimer[1] = bbuf_int;
-        send_settings();
         break;
       case 9022:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 2
         steptimer[2] = bbuf_int;
-        send_settings();
         break;
       case 9023:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 3
         steptimer[3] = bbuf_int;
-        send_settings();
         break;
       case 9024:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 4
         steptimer[4] = bbuf_int;
-        send_settings();
         break;      
       case 9025:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Boil
         steptimer[5] = bbuf_int;
@@ -135,7 +124,10 @@ void user_input(){
       // Manuel control of system
       //
       
-
+      case 9090: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
+        wspeed1 = bbuf_int;
+        update_pump();        
+      break; 
 
       //
       // Reset system

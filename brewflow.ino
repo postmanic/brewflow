@@ -1,3 +1,4 @@
+
 /*
  * This file is part of brewflow.
  *
@@ -26,12 +27,9 @@
 // Uses 2 x SSR 40A for PID controlled PWM output to heaters MLT and HLT
 
 #define One_Wire_Bus (3)  // Thermometers.
-#define pump1ctrl (4)     // Pump 1 control.
-#define pump1pwm  (5)     // Pump 1 PWM.
-//#define pump2ctrl (6)     // Pump 2 control.
-//#define pump2pwm  (7)     // Pump 2 PWM.
-#define heat1 (9)         // MLT heater PWM.
-//#define heat2 (10)        // HLT heater PWM.
+#define pump_control (4)  // Pump control.
+#define pump_pwm     (5)  // Pump PWM.
+#define heat_control (9)  // MLT heater PWM.
 
 //#define SECS_PER_MIN  (60UL)
 //#define SECS_PER_HOUR (3600UL)
@@ -46,22 +44,57 @@
 //#define ONE_SECOND (20)
 #define T_50MSEC (50)
 
-double kc = 1.2, ti = 2.5, td = 0.5, ts = 5;
-double k_lpf, k0, k1, k2, k3, lpf1, lpf2, pp, pi, pd;
-double ek, ek_1, ek_2, xk_1, xk_2, yk_1, yk_2;
+// Controller settings
 
-byte pump1speed, intensity, debugtemp1, debugtemp2;
+// Steeptime - When does timer start
+// Temp sensing - Which sensor is used. Combination
+// Pump setting - Pump ventilation. Pumpduring steps
+
+byte pump_speed, intensity;
+
+//
+// target[8]
+//
+// temperatur mellem 0 og 255 grader celsius/fahrenheit
+// 
+// [0] Current setpoint temperature for PID
+// [1] Mash In setpoint temperature
+// [2] Step 1 setpoint temperature
+// [3] Step 2 setpoint temperature
+// [4] Step 3 setpoint temperature
+// [5] Step 4 setpoint temperature
+// [6] Mash out setpoint temperature
+// [7] Boil setpoint temperature
+//
+
 byte target[8];
+
+//
+// steptimer[6]
+//
+// tid mellem 0 og 65254 sekunder
+//
+// [0] Current setpoint timer
+// [1] Step 1 setpoint timer
+// [2] Step 2 setpoint timer
+// [3] Step 3 setpoint timer
+// [4] Step 4 setpoint timer
+// [5] Boil setpoint timer
+//
+
 int steptimer[6];
-byte temp[5];
+
+int temp_sens;
+float temp[5];
+byte debugtemp1, debugtemp2;
 
 boolean stringComplete = false;
 boolean ilock = false; // Interlock. Can be released by user acknowledging water has been filled into tank.
 boolean mlock = false; // Interlock. Can be released by user acknowledging malt has been added to tank.
 boolean vrg = false; // Switch for turning PID on and off.
-boolean pump1state = false; // If true pump 1 is running.
+boolean pump1state = 0; // If true pump 1 is running.
 
-int ticks, step_x, pumpvent, pumptimer;
+int ticks, step_x, pumpvent, pumptimer, wspeed1;
 String inputString = "", bbuf = "", cbuf = "";
 int lastupdatestatus; // Holds time for when status was sent to webclient.
 int lastupdatesettings; // Holds time for when status was sent to webclient.
@@ -72,15 +105,18 @@ int lastupdatepid; // Holds time for when UI received the last update.
 OneWire oneWire(One_Wire_Bus);
 DallasTemperature sensors(&oneWire);
 
+DeviceAddress T1 = { 0x28, 0x75, 0xE8, 0x26, 0x06, 0x00, 0x00, 0x21 };
+DeviceAddress T2 = { 0x28, 0xFF, 0x69, 0x15, 0x06, 0x00, 0x00, 0xC2 };
+
 void loop(void) {
-
-  read_temperatures();
+   
   update_pid();
+  update_pump();
   //update_ui(10);
-  send_status(1); 
-  //send_settings(20);
+  send_status(1);
+  //send_settings();
   user_input();
-
+  update_temperatures();
   switch (step_x) {
 
     //
@@ -90,24 +126,43 @@ void loop(void) {
     case 1:
 
       //
-      // PID slåes til, hvorefter temperaturen styres automatisk.
-      // Hvis der checkes skal der også være en handling hvis ikke alt er normalt. WDT reset.
+      // Mash In
+      // Mash In starter når bryggeren har tilføjet vand. ilock skal være sand.
+      // PID startes og varmer vandet til emperaturen for Mash In er nået.
+      // og er afsluttet når temperaturen er nået.
+      // 
       // Inden PID styring tændes dobbeltcheckes at bruger har accepteret at der er påfyldt vand.
       //
+      // Case 1 kan kun initieres fra ilock og kun når der ikke er tilsat malt
+      // Når ilock sættes til sand af brygger startes PID den temperatur der skal rammes er sat af brygger 
+
+      //  if (bbuf_int == 1 && ilock == false && target[1] > 40 && step_x == 0){
+      //    step_x = 1;
+      //    target[0] = target[1];
+      //    pumptimer =  millis()/1000;
+      //     delay(2);
+      //    ilock = true;
       
+      //
       if (ilock == true && mlock == false) {
-      vrg = 1; 
-            
-      //  
+
+      //
+      // PID tændes
+      //
+      
+      vrg = 1;
+
+      //
       // Ventilering af pumpe efter der er påfyldt vand. Der ventileres 5 sekunder, pause 5 sekunder, ventilering 5 sekunder.
       // Hvornår skal der ventileres. Bedste bud er når der er påfyldt vand men det bedtyder at man også skal huske at flytte slanger.
       // Jeg afprøver når jeg har modtaget slanger.
-      // 
+      //
       
       if ((millis()/1000 < (pumptimer + 5)) || (millis()/1000 > (pumptimer + 10) && millis()/1000 < (pumptimer + 15)) ){
         // hvis ikke pumpen er tændt skal den tændes
-        if (pump1state == false){
-          pump_set1(100);
+        if (pump1state == 0){
+          pump1state = 1;
+          wspeed1 = 60;
         }  
       }
       else {
@@ -116,8 +171,9 @@ void loop(void) {
         // Pumpe slukkes
         //
         
-        if (pump1state == true){
-          pump_set1(0);
+        if (pump1state == 1){
+          pump1state = 0;
+          wspeed1=0;
           pumpvent++;
         }
       }
@@ -126,7 +182,7 @@ void loop(void) {
       // Når temperturen er nået og der er ventileret skal vi videre til næste trin.
       //
       
-      if (temp[1] >= target[1] && step_x == 1 && ilock == true && pumpvent == 2){
+      if (temp[0] >= target[0] && step_x == 1 && ilock == true && pumpvent == 2){
         step_x = 2;
       }} 
     break; 
@@ -140,46 +196,59 @@ void loop(void) {
     case 2:
       if (ilock == true && mlock == true){
         steptimer[0] = (millis()/1000) + (60 * steptimer[1]);           
+        target[0] = target[2];       
         step_x = 3;
-        vrg = 0;
+        vrg = 1;
       }   
     break; 
 
 
     case 3: // Step 1.
-      vrg = 1;
-      target[0] = target[2];
       if (millis()/1000 < (steptimer[0]) && step_x == 3){
-      // Timer running
+      // Timer and PID running
       }
       else {
+        
       // Step done
+      //
+      // Hvis target[3] = 40 og steptimer [2] = 0 then case 9 
+      //
+      // Der skal kunne vælges om risetime skal være med i Mash In, Step 1, en kombination eller slet ikke. 
+      // Pumpe
+      //
+      //
+      
+      if (steptimer[2] == 0) {
+        steptimer[0] = millis()/1000 + (60 * 15);
+        target[0] = target[6];
+        step_x = 7;
+        break;        
+      }
+
       steptimer[0] = millis()/1000 + (60 * steptimer[2]);
+      target[0] = target[3];
       step_x = 4;
-      vrg = 0;
+      vrg = 1;
       }
       
     break;
 
      
      case 4: // Step 2.
-      vrg = 1;
-      target[0] = target[3];
       if (millis()/1000 < (steptimer[0]) && step_x == 4){
-      // Timer running
+      // Timer and PID running
       }
       else {
       // Step done
       steptimer[0] = millis()/1000 + (60 * steptimer[3]);
       step_x = 5;
-      vrg = 0;
+      vrg = 1;
+      target[0] = target[4];      
       }
       
     break;
     
      case 5: // Step 3.
-      vrg = 1;
-      target[0] = target[4];
       if (millis()/1000 < (steptimer[0]) && step_x == 5){
       // Timer running
       }
@@ -187,13 +256,12 @@ void loop(void) {
       // Step done
       steptimer[0] = millis()/1000 + (60 * steptimer[4]);
       step_x = 6;
-      vrg = 0;
+      vrg = 1;
+      target[0] = target[5];
       }
     break; 
     
       case 6: // Step 4.
-      vrg = 1;
-      target[0] = target[5];
       if (millis() < (steptimer[0] * 1000) && step_x == 6){
       // Timer running
       }
@@ -201,6 +269,32 @@ void loop(void) {
       // Step done
       steptimer[0] = millis()/1000 + (60 * steptimer[5]);
       step_x = 7;
+      vrg = 1;
+      target[0] = target[6];
+      }
+    break; 
+
+      case 7: // Mash Out.
+      if (millis() < (steptimer[0] * 1000) && step_x == 7){
+      // Timer running
+      }
+      else {
+      // Step done
+      steptimer[0] = millis()/1000 + (60 * steptimer[6]);
+      step_x = 8;
+      vrg = 1;
+      target[0] = target[7];
+      }
+    break;
+
+      case 8: // Boil.
+      if (millis() < (steptimer[0] * 1000) && step_x == 8){
+      // Timer running
+      }
+      else {
+      // Step done
+      steptimer[0] = millis()/1000 + (60 * steptimer[5]);
+      step_x = 9;
       vrg = 0;
       }
     break; 

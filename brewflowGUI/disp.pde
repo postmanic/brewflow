@@ -101,7 +101,7 @@ public void VisKnapper(){
 
 
   cp5.addSlider("PumpSpeed1")
-     .setPosition(410,50)
+     .setPosition(410,150)
      .setCaptionLabel("DEBUG")
      .setSize(150,30)
      .setRange(0,100)
@@ -109,7 +109,7 @@ public void VisKnapper(){
      ; 
 
   cp5.addSlider("PumpSpeed2")
-     .setPosition(410,225)
+     .setPosition(410,200)
      .setCaptionLabel("BOIL TEMP")
      .setSize(150,30)
      .setRange(95,105)
@@ -162,7 +162,7 @@ public void VisKnapper(){
   // create a new button with name 'buttonA'
   cp5.addButton("StartPump3")
      .setValue(0)
-     .setPosition(410,260)
+     .setPosition(410,235)
      .setCaptionLabel("Adjust")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -171,7 +171,7 @@ public void VisKnapper(){
   // create a new button with name 'buttonA'
   cp5.addButton("Mlock")
      .setValue(0)
-     .setPosition(610,67)
+     .setPosition(610,167)
      .setCaptionLabel("MALT ADDED")
      .setSize(80,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -180,7 +180,7 @@ public void VisKnapper(){
   // create a new button with name 'buttonA'
   cp5.addButton("Ilock")
      .setValue(0)
-     .setPosition(610,50)
+     .setPosition(610,150)
      .setCaptionLabel("WATER ADDED")
      .setSize(80,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -215,24 +215,33 @@ public void VisKnapper(){
 
   cp5.addButton("ResetController")
      .setValue(0)
-     .setPosition(712,280)
+     .setPosition(712,240)
      .setCaptionLabel("Reset Controller")
      .setSize(79,25)
      .getCaptionLabel().align(CENTER,CENTER)
      ;
 
-  //cp5.addButton("BoilMLTTemp")
-     //.setValue(0)
-     //.setPosition(720,140)
-     //.setCaptionLabel("...")
-     //.setSize(40,15)
-     //.getCaptionLabel().align(CENTER,CENTER)
-    // ;
+  cp5.addButton("SteepSetting")
+     .setValue(0)
+     .setPosition(610,184)
+     .setCaptionLabel("STEEPTIME")
+     .setSize(80,15)
+     .getCaptionLabel().align(CENTER,CENTER)
+     ;
+
+  cp5.addButton("TempSetting")
+     .setValue(0)
+     .setPosition(610,201)
+     .setCaptionLabel("TEMP SENSING")
+     .setSize(80,15)
+     .getCaptionLabel().align(CENTER,CENTER)
+     ;
+
 
   // create a new button with name 'buttonA'
   cp5.addButton("DebugT1")
      .setValue(0)
-     .setPosition(410,85)
+     .setPosition(410,235)
      .setCaptionLabel("T1")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -241,7 +250,7 @@ public void VisKnapper(){
   // create a new button with name 'buttonA'
   cp5.addButton("DebugT2")
      .setValue(0)
-     .setPosition(454,85)
+     .setPosition(454,235)
      .setCaptionLabel("T2")
      .setSize(40,15)
      .getCaptionLabel().align(CENTER,CENTER)
@@ -324,51 +333,62 @@ String boiltimer = str((int)BoilTimer);
   myPort.write("9010");
   myPort.write(mashintemp);
   myPort.write(lf);
-  delay(200);
+  delay(400);
+  
   myPort.write("9011");
   myPort.write(step1temp);
   myPort.write(lf);
-  delay(200);
+  delay(400);
+  
   myPort.write("9012");
   myPort.write(step2temp);
   myPort.write(lf);
-  delay(200);
+  delay(400);
+  
   myPort.write("9013");
   myPort.write(step3temp);
   myPort.write(lf);
- delay(200); 
+  delay(400);
+  
   myPort.write("9014");
   myPort.write(step4temp);
   myPort.write(lf);
- delay(200); 
+  delay(400);
+  
   myPort.write("9015");
   myPort.write(mashouttemp);
   myPort.write(lf);
- delay(200);
+  delay(400);
+  
   myPort.write("9016");
   myPort.write(boiltemp);
   myPort.write(lf);
- delay(200);
+  delay(400);
+  
   myPort.write("9021");
   myPort.write(step1timer);
   myPort.write(lf);
- delay(200);  
+  delay(400);
+  
   myPort.write("9022");
   myPort.write(step2timer);
   myPort.write(lf);
- delay(200);  
+  delay(400); 
+  
    myPort.write("9023");
   myPort.write(step3timer);
   myPort.write(lf);
- delay(200); 
+  delay(400);
+  
    myPort.write("9024");
   myPort.write(step4timer);
   myPort.write(lf);
- delay(200); 
-    myPort.write("9025");
+  delay(400);
+  
+  myPort.write("9025");
   myPort.write(boiltimer);
   myPort.write(lf);
- delay(200); 
+  delay(400);
 }
 
 void HLTSetTemp() {
@@ -384,6 +404,12 @@ String HLTtemp = str((int)HLTSetTemp);
   myPort.write("9060");
   myPort.write(0);
   myPort.write(lf);
+
+}
+
+void SteepSetting() {
+
+  label15.setText("Rise");
 
 }
 

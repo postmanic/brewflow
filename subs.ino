@@ -34,21 +34,3 @@ void serialEvent() {
     }
   }
 }
-
-void pump_set1(int wspeed1){
-  if (wspeed1 > 100) {
-    wspeed1 = 100;
-  }
-  if (wspeed1 > 0) {
-    pump1speed = (wspeed1 * 255) / 100;
-    digitalWrite(pump1ctrl, LOW);    
-    analogWrite(pump1pwm, pump1speed);
-    pump1state = true;
-    delay(5);
-  }
-  else {
-    analogWrite(pump1pwm, 0);
-    pump1speed = 0;
-    pump1state = false;
-  } 
-}

@@ -14,13 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with brewflow.  If not, see <http://www.gnu.org/licenses/>.
  */
+
  
+  
 void user_input(){
+
   if (stringComplete){
+
     cbuf = inputString.substring(0,4);
+
     bbuf = inputString.substring(4);
+
     long bbuf_int = bbuf.toInt(); // needs checking for correct input and reason for converting to integer is unknown
+
     long cbuf_int = cbuf.toInt(); // needs checking for correct input and reason for converting to integer is unknown
+
+
     switch (cbuf_int) {
       
       //case 1111: // System will reset AVR if no response is received from brewflowGUI.
@@ -50,11 +59,11 @@ void user_input(){
       case 9014:  // Set step temp to bbuf. 9014xx where xx is temperature in celcius degrees. Step 4
         target[5] = bbuf_int;
         send_settings();
-        break;
+         break;
       case 9015:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Mash Out
         target[6] = bbuf_int;
-        //send_settings();
-        break;
+        send_settings();
+         break;
       case 9016:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Boil
         target[7] = bbuf_int;
         send_settings();
@@ -98,9 +107,8 @@ void user_input(){
       case 9041:  // User acknowledges that there is water in tank. No water will damage equipment
         if (bbuf_int == 1 && ilock == false && target[1] > 40 && step_x == 0){
           step_x = 1;
-          temp[0] = target[1];
+          target[0] = target[1];
           pumptimer =  millis()/1000;
-          delay(2);
           ilock = true;
         }
         break;
@@ -117,7 +125,7 @@ void user_input(){
       case 9050: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
         if (ilock == true && target[1] > 0 && step_x == 0) {
           step_x = 1;
-          temp[0] = target[1];
+          target[0] = target[1];;
           pumptimer =  millis()/1000;
           delay(2);
         }

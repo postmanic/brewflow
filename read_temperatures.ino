@@ -20,6 +20,7 @@
 // Needs more elegant control of sensors
 
  void update_temperatures(){
+  
   sensors.requestTemperatures();
   
   temp[1] = sensors.getTempC(T1);
@@ -28,9 +29,5 @@
 
   temp[2] = sensors.getTempC(T2);
   delay(2);
-  temp[2] = debugtemp2;
-  //temp3 = sensors.getTempCByIndex(2);
-  //delay(2);
-  //temp4 = sensors.getTempCByIndex(3); 
-  //delay(2);
+  //temp[2] = debugtemp2;
 }

@@ -30,28 +30,27 @@ void init_pid() {
 }
 
 void update_pid() {
-  temp[0] = temp[1];
   if (millis()/1000 >= (lastupdatepid + 20)){
     temp[0] = temp[1];    
     lastupdatepid =  millis()/1000;
-    ek = target[0] - temp[0];
+    ek = steptarget - temp[0];
     if (vrg){
       pp = kc * (xk_1 - temp[0]);
       pi = k0 * ek;
       pd = k1 * (2.0 * xk_1 - temp[0] - xk_2);
-      intensity += pp + pi + pd;
+      heatspeed += pp + pi + pd;
     }
     else { 
-      intensity = pp = pi = pd = 0.0; 
+      heatspeed = pp = pi = pd = 0.0; 
     }
     xk_2 = xk_1;
     xk_1 = temp[0];
-    if (intensity > 100) {
-      intensity = 100;
+    if (heatspeed > 100) {
+      heatspeed = 100;
     }
-    else if (intensity < 0) {
-      intensity = 0;
+    else if (heatspeed < 0) {
+      heatspeed = 0;
     }
-    analogWrite(heat_control, intensity);
+    analogWrite(heatcontrol, heatspeed);
   }
 }

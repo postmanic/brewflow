@@ -17,7 +17,7 @@
 
  
   
-void user_input(){
+void get_input(){
 
   if (stringComplete){
 
@@ -37,44 +37,44 @@ void user_input(){
       //break;
       
       //
-      // user input for setting step parametres.
+      // user input for setting step parametres. Ikke særligt fikst, men det virker
       //
       
       case 9010:  // Set step temp to bbuf. 9010xx where xx is temperature in celcius degrees. Mash In
-        target[1] = bbuf_int;
+        mashintarget = bbuf_int;
         break;
       case 9011:  // Set step temp to bbuf. 9011xx where xx is temperature in celcius degrees. Step 1
-        target[2] = bbuf_int;
+        step1target = bbuf_int;
         break;
       case 9012:  // Set step temp to bbuf. 9012xx where xx is temperature in celcius degrees. Step 2
-        target[3] = bbuf_int;
+        step2target = bbuf_int;
         break;
       case 9013:  // Set step temp to bbuf. 9013xx where xx is temperature in celcius degrees. Step 3
-        target[4] = bbuf_int;
+        step3target = bbuf_int;
         break;
       case 9014:  // Set step temp to bbuf. 9014xx where xx is temperature in celcius degrees. Step 4
-        target[5] = bbuf_int;
+        step4target = bbuf_int;
          break;
       case 9015:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Mash Out
-        target[6] = bbuf_int;
+        mashouttarget = bbuf_int;
          break;
       case 9016:  // Set step temp to bbuf. 9015xx where xx is temperature in celcius degrees. Boil
-        target[7] = bbuf_int;
+        boiltarget = bbuf_int;
         break;          
       case 9021:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 1
-        steptimer[1] = bbuf_int;
+        step1timer = bbuf_int;
         break;
       case 9022:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 2
-        steptimer[2] = bbuf_int;
+        step2timer = bbuf_int;
         break;
       case 9023:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 3
-        steptimer[3] = bbuf_int;
+        step3timer = bbuf_int;
         break;
       case 9024:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Step 4
-        steptimer[4] = bbuf_int;
+        step4timer = bbuf_int;
         break;      
       case 9025:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Boil
-        steptimer[5] = bbuf_int;
+        boiltimer = bbuf_int;
         send_settings();
         break;   
 
@@ -93,11 +93,8 @@ void user_input(){
       // interlocks that needs to be input by user.
       //
 
-      case 9041:  // User acknowledges that there is water in tank. No water will damage equipment
-        if (bbuf_int == 1 && ilock == false && target[1] > 40 && step_x == 0){
-          step_x = 1;
-          target[0] = target[1];
-          pumptimer =  millis()/1000;
+      case 9041:  // Bruger bekræfter at der er påfyldt vand. ilock kan kun sættes fra initialisering.
+        if (bbuf_int == 1 && ilock == false && step_x == 0){
           ilock = true;
         }
         break;
@@ -106,19 +103,6 @@ void user_input(){
           mlock = true;
         }
         break;
-
-      //
-      // Start brewing.
-      //
-
-      case 9050: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
-        if (ilock == true && target[1] > 0 && step_x == 0) {
-          step_x = 1;
-          target[0] = target[1];;
-          pumptimer =  millis()/1000;
-          delay(2);
-        }
-      break; 
 
       //
       // Manuel control of system

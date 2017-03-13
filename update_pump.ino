@@ -4,16 +4,16 @@ void update_pump(){
     wspeed1 = 100;
   }
   if (wspeed1 > 0) {
-    pump_speed = (wspeed1 * 255) / 100;
+    pumpspeed = (wspeed1 * 255) / 100;
   }
     
-  if (pump1state == 1) {    
-    digitalWrite(pump_control, LOW);    
-    analogWrite(pump_pwm, pump_speed);
+  if (pumpstate == 1) {    
+    digitalWrite(pumpcontrol, LOW);    
+    analogWrite(pumppwm, pumpspeed);
   }
   else {
-    digitalWrite(pump_control, LOW);
-    analogWrite(pump_pwm, 0);
+    digitalWrite(pumpcontrol, LOW);
+    analogWrite(pumppwm, 0);
 
   } 
 }

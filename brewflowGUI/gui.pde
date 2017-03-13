@@ -21,7 +21,7 @@ public void createGUI(){
   label18.setOpaque(true);   
   
   // TEMP 1 VALUE MLT
-  label3 = new GLabel(this, 465, 50, 35, 18);
+  label3 = new GLabel(this, 465, 50, 45, 18);
   label3.setText("...");
   label3.setOpaque(true);
   
@@ -31,7 +31,7 @@ public void createGUI(){
   label17.setOpaque(true);
   
   // TEMP 2 VALUE MLT
-  label6 = new GLabel(this, 465, 70, 35, 18);
+  label6 = new GLabel(this, 465, 70, 45, 18);
   label6.setText("...");
   label6.setOpaque(true); 
 

@@ -35,11 +35,13 @@ void setup() {
  
   analogReference(EXTERNAL);
   
-  pinMode(heat_control, OUTPUT);
-  pinMode(pump_control, OUTPUT);
+  pinMode(heatcontrol, OUTPUT);
+  pinMode(pumpcontrol, OUTPUT);
   
-  analogWrite(heat_control, LOW);
+  analogWrite(heatcontrol, LOW);
   
   Serial.begin(57600);
   //Serial.println("BrewFlow Ready!");
+
+
 }

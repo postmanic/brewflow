@@ -21,7 +21,9 @@ void send_status(int tempupdate){
    int nop[] = {13, temp[0]*10, temp[1]*10, temp[2]*10, ilock, mlock, vrg, heatspeed, pumpstate, wspeed1, step_x, steptarget, lastupdatestatus}; 
    send_data(1010, nop);
    int pop[] = {15, steptarget, mashintarget, step1target, step2target, step3target, step4target, mashouttarget, boiltarget, steptimer, step1timer, step2timer, step3timer, step4timer, boiltimer}; 
-   send_data(1011, pop);   
+   send_data(1011, pop); 
+   int kop[] = {5, pp, pi, pd, heatspeed}; 
+   send_data(1012, kop);    
   }
 }
 

@@ -7,7 +7,7 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.CYAN_SCHEME);
   G4P.setCursor(ARROW);
   if(frame != null)
-    frame.setTitle("brewflow v0.1");
+    frame.setTitle("brewflow v0.2");
 
   // STEEPTIME HANDLING
   //label2 = new GLabel(this, 286, 480, 60, 18);
@@ -41,7 +41,7 @@ public void createGUI(){
   label19.setOpaque(true);
   
   // SET TEMP VALUE MLT
-  label1 = new GLabel(this, 598, 70, 28, 18);
+  label1 = new GLabel(this, 598, 70, 45, 18);
   label1.setText("...");
   label1.setOpaque(true);
 

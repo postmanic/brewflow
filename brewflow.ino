@@ -45,17 +45,24 @@
 //#define ONE_SECOND (20)
 #define T_50MSEC (50)
 
+static double  xk_1;
+static double  xk_2;
+
+double kc = 1.2, ti = 2.5, td = 0.5, ts = 20;
+double k0, k1, k2, k3, pp, pi, pd;
+double ek, ek_1, ek_2, yk_1, yk_2;
+
 // Controller settings
 
 // Steeptime - When does timer start
 // Temp sensing - Which sensor is used. Combination
 // Pump setting - Pump ventilation. Pumpduring steps
 
-byte pumpspeed, heatspeed; // ( 0 - 100% )
+byte pumpspeed; // ( 0 - 100% )
 
-int steptimer, mashintimer, step1timer, step2timer, step3timer, step4timer, mashouttimer, boiltimer;          // (0 - 100 minutter)
+int steptimer, mashintimer, step1timer, step2timer, step3timer, step4timer, mashouttimer = 1, boiltimer;          // (0 - 100 minutter)
 byte steptarget, mashintarget, step1target,step2target, step3target, step4target, mashouttarget, boiltarget;  // (0 - 110 grader)
-float temp[3];      // (Kan muligvis converteres til unsigned integer hvis der er behov)
+double heatspeed, temp[3];      // (Kan muligvis converteres til unsigned integer hvis der er behov)
 
 int temp_sens;
 byte debugtemp1, debugtemp2; // (0 - 255 degrees)
@@ -100,14 +107,14 @@ void loop(void) {
       
       if ((millis()/1000 < (pumptimer + 5)) || (millis()/1000 > (pumptimer + 10) && millis()/1000 < (pumptimer + 15)) ){
         if (pumpstate == 0){
-          pumpstate = 1;
+          pumpstate = true;
           wspeed1 = 60;
         }  
       }
       else {
         if (pumpstate == 1){
-          pumpstate = 0;
-          wspeed1=0;
+          pumpstate = false;
+          wspeed1 = 0;
           pumpvent++;
         }
       }
@@ -128,8 +135,9 @@ void loop(void) {
         steptimer = (millis()/1000) + (60 * step1timer);   // step 1        
         steptarget = step1target;       
         step_x = 3;
-        vrg = 1;
-        pumpstate = 1;
+        init_pid();
+        //vrg = 1;
+        pumpstate = true;
         wspeed1 = 60;
       }   
     break; 
@@ -145,6 +153,7 @@ void loop(void) {
       steptimer = millis()/1000 + (60 * step2timer);
       steptarget = step2target;
       vrg = true;
+      delay(50);
       }
       
     break;
@@ -158,7 +167,8 @@ void loop(void) {
       step_x = 5;      
       steptimer = millis()/1000 + (60 * step3timer);
       steptarget = step3target;         
-      vrg = true;  
+      vrg = true;
+      delay(50);  
       }
       
     break;
@@ -173,11 +183,13 @@ void loop(void) {
       steptimer = millis()/1000 + (60 * step4timer);
       steptarget = step4target;
       vrg = true;
+      delay(50);
+      
       }
     break; 
     
       case 6: // Step 4.
-      if (millis() < (steptimer * 1000)){
+      if (millis()/1000 < (steptimer)){
       // Timer running
       }
       else {
@@ -186,11 +198,12 @@ void loop(void) {
       steptimer = millis()/1000 + (60 * mashouttimer);
       steptarget = mashouttarget;      
       vrg = true;
+      delay(50);
       }
     break; 
 
       case 7: // Mash Out.
-      if (millis() < (steptimer * 1000)){
+      if (millis()/1000 < (steptimer)){
       // Timer running
       }
       else {
@@ -199,17 +212,29 @@ void loop(void) {
       steptimer = millis()/1000 + (60 * boiltimer);
       steptarget = boiltarget;     
       vrg = true;
+      delay(50);
        }
     break;
 
       case 8: // Boil.
-      if (millis() < (steptimer * 1000)){
-      // Timer running
+      if (millis()/1000 < (steptimer)){
+        pumpstate = false;
+        wspeed1 = 60;
       }
       else {
       // Boil done, finished.
       vrg = false;
+      step_x = 9;
+      delay(50);
       }
+    break; 
+
+      case 9: // Done.
+
+      vrg = false;
+      pumpstate = false;
+      wspeed1 = 0;
+      
     break; 
 
  
@@ -218,7 +243,7 @@ void loop(void) {
     //
  
     default:
-    if (ilock == true && mashintarget != 0 && step1target != 0 and step1timer !=0) { 
+    if (ilock == true && mashintarget != 0 && step1target != 0 && step1timer !=0 ) { 
       step_x = 1;
       steptarget = mashintarget;
       steptimer = mashintimer; 

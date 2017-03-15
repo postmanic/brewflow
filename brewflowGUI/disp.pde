@@ -3,8 +3,8 @@ import controlP5.*;
 
 ControlP5 cp5;
 
-int MashInTemp;
-int Step1Temp;
+int MashInTemp = 73;
+int Step1Temp = 67;
 int Step2Temp;
 int Step3Temp;
 int Step4Temp;
@@ -12,7 +12,7 @@ int MashOutTemp = 76;
 int BoilTemp = 101;
 
 int MashInTimer;
-int Step1Timer;
+int Step1Timer = 60;
 int Step2RiseTimer;
 int Step2Timer;
 int Step3RiseTimer;
@@ -159,14 +159,14 @@ public void VisKnapper() {
   //  .getCaptionLabel().align(CENTER,CENTER)
   //  ;     
 
-  // create a new button with name 'buttonA'
-  // cp5.addButton("StopPump1")
-  //  .setValue(0)
-  //  .setPosition(454,185)
-  //  .setCaptionLabel("Stop")
-  //  .setSize(40,15)
-  //  .getCaptionLabel().align(CENTER,CENTER)
-  //  ;
+   //create a new button with name 'buttonA'
+   cp5.addButton("StopPump")
+    .setValue(0)
+    .setPosition(454,159)
+    .setCaptionLabel("Stop")
+    .setSize(40,15)
+    .getCaptionLabel().align(CENTER,CENTER)
+    ;
 
   cp5.addButton("StartPump2")
     .setValue(0)
@@ -249,7 +249,7 @@ public void VisKnapper() {
   cp5.addButton("SteepSetting")
     .setValue(0)
     .setPosition(610, 184)
-    .setCaptionLabel("STEEPTIME")
+    .setCaptionLabel("MASHOUT DONE")
     .setSize(80, 15)
     .getCaptionLabel().align(CENTER, CENTER)
     ;

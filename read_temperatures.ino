@@ -25,7 +25,7 @@
   
   temp[1] = sensors.getTempC(T1);
   delay(2);
-  temp[1] = debugtemp1;
+  //temp[1] = debugtemp1;
 
   temp[2] = sensors.getTempC(T2);
   delay(2);

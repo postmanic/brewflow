@@ -15,10 +15,6 @@
  * along with brewflow.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-double kc = 1.2, ti = 2.5, td = 0.5, ts = 5;
-double k0, k1, k2, k3, pp, pi, pd;
-double ek, ek_1, ek_2, xk_1, xk_2, yk_1, yk_2;
-
 void init_pid() {
   if (ti == 0.0) {
     k0 = 0.0;
@@ -30,14 +26,14 @@ void init_pid() {
 }
 
 void update_pid() {
+    temp[0] = temp[1];     
   if (millis()/1000 >= (lastupdatepid + 20)){
-    temp[0] = temp[1];    
     lastupdatepid =  millis()/1000;
     ek = steptarget - temp[0];
     if (vrg){
       pp = kc * (xk_1 - temp[0]);
       pi = k0 * ek;
-      pd = k1 * (2.0 * xk_1 - temp[0] - xk_2);
+      pd = k1 * ((2.0 * xk_1) - temp[0] - xk_2);
       heatspeed += pp + pi + pd;
     }
     else { 
@@ -51,6 +47,7 @@ void update_pid() {
     else if (heatspeed < 0) {
       heatspeed = 0;
     }
-    analogWrite(heatcontrol, heatspeed);
+    analogWrite(heatcontrol, (heatspeed * 255) / 100);
+    Serial.println(pp);
   }
 }

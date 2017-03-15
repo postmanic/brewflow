@@ -7,7 +7,7 @@ int lf = 10, val;
 
 void SerialPortSetup() {
 
-  myPort = new Serial(this, "COM5", 57600);
+  myPort = new Serial(this, "COM1", 57600);
   delay(50);
   myPort.clear();
 }

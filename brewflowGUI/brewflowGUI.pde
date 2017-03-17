@@ -3,9 +3,7 @@
 int PumpSpeed1 = 0;
 int PumpSpeed2 = 0;
 int PumpSpeed3 = 0;  
-
 float temp1;
-
 int mashstep = 0;
 int dogwatch, linewatch;
 PImage img;
@@ -14,10 +12,8 @@ PGraphics pg;
 Textlabel t;
 GPlot plot1, plot2;
 
-
-
 void setup() {
-  img = loadImage("tank.png");
+
   size(800, 800); 
   createGUI();
   VisKnapper();
@@ -27,7 +23,6 @@ void setup() {
 } 
 
 void draw() {
-
 
   stroke(153);
   fill(0, 0, 0);

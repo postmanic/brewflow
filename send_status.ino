@@ -18,8 +18,20 @@
 void send_status(int tempupdate){
   if (millis()/1000 >= (lastupdatestatus + tempupdate)){
     lastupdatestatus =  millis()/1000;
-   int nop[] = {13, temp[0]*10, temp[1]*10, temp[2]*10, ilock, mlock, vrg, heatspeed, pumpstate, wspeed1, step_x, steptarget, lastupdatestatus}; 
+   int nop[] = {13, temp[0]*10, temp[1]*10, temp[2]*10, ilock, mlock, vrg, yk, pumpstate, wspeed1, step_x, steptarget, lastupdatestatus}; 
    send_data(1010, nop);
+   Serial.print ("YK:");
+   Serial.println (yk);
+   Serial.print ("PP:");
+   Serial.println (pp);
+      Serial.print ("PI:");
+   Serial.println (pi);
+      Serial.print ("PD:");
+   Serial.println (pd);
+   
+   
+   
+   
    int pop[] = {15, steptarget, mashintarget, step1target, step2target, step3target, step4target, mashouttarget, boiltarget, steptimer, step1timer, step2timer, step3timer, step4timer, boiltimer}; 
    send_data(1011, pop); 
    int kop[] = {5, pp, pi, pd, heatspeed}; 

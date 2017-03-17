@@ -7,7 +7,7 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.CYAN_SCHEME);
   G4P.setCursor(ARROW);
   if(frame != null)
-    frame.setTitle("brewflow v0.2");
+    frame.setTitle("brewflow v0.3");
 
   // STEEPTIME HANDLING
   //label2 = new GLabel(this, 286, 480, 60, 18);
@@ -65,8 +65,9 @@ public void createGUI(){
   label5.setText("...");
   label5.setOpaque(true);
   
+  // DEBUG field for checking which step
   label14 = new GLabel(this, 663, 120, 71, 18);
-  label14.setText("STEP");
+  label14.setText("DEBUG");
   label14.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label14.setOpaque(true);
   
@@ -142,27 +143,29 @@ public void createGUI(){
   //label16.setLocalColorScheme(GCScheme.RED_SCHEME);
   //label16.setOpaque(true); 
   
+  // Label header left
   label9 = new GLabel(this, 15, 10, 58, 18);
   label9.setText("RECEIPE");
   label9.setOpaque(true);
 
+  // Label header right
   label10 = new GLabel(this, 410, 10, 120, 18);
   label10.setText("SYSTEM CONTROL");
   label10.setOpaque(true);
 
-  // Pump 1 readout HLT
+  // Malt added ?
   label11 = new GLabel(this, 700, 167, 22, 15);
   label11.setText("NO");
   label11.setLocalColorScheme(GCScheme.RED_SCHEME);
   label11.setOpaque(true);
 
-  // Pump 1 readout HLT
-  label15 = new GLabel(this, 700, 184, 50, 15);
-  label15.setText("Normal");
+  // Mashout done ?
+  label15 = new GLabel(this, 700, 184, 22, 15);
+  label15.setText("NO");
   label15.setLocalColorScheme(GCScheme.RED_SCHEME);
   label15.setOpaque(true);
   
-  // Pump 1 readout HLT
+  // Temperature reading mode
   label8 = new GLabel(this, 700, 201, 50, 15);
   label8.setText("T1 # T2");
   label8.setLocalColorScheme(GCScheme.RED_SCHEME);
@@ -180,10 +183,10 @@ public void createGUI(){
   //label20.setOpaque(true);
 
   // Ticker
-  label13 = new GLabel(this, 410, 270, 375, 36);
-  label13.setText("Waiting for water and receipe.");
-  label13.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  label13.setOpaque(true);
+  label20 = new GLabel(this, 410, 270, 375, 36);
+  label20.setText("INIT");
+  label20.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  label20.setOpaque(true);
  
 }
 

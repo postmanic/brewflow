@@ -1,4 +1,4 @@
-/*
+ /*
  * This file is part of brewflow.
  *
  * brewflow is free software: you can redistribute it and/or modify
@@ -26,28 +26,28 @@ void init_pid() {
 }
 
 void update_pid() {
-    temp[0] = temp[1];     
+
+  xk = temp[0] = temp[1];
   if (millis()/1000 >= (lastupdatepid + 20)){
     lastupdatepid =  millis()/1000;
-    ek = steptarget - temp[0];
+    ek = steptarget - xk;
     if (vrg){
-      pp = kc * (xk_1 - temp[0]);
+      pp = kc * (xk_1 - xk);
       pi = k0 * ek;
-      pd = k1 * ((2.0 * xk_1) - temp[0] - xk_2);
-      heatspeed += pp + pi + pd;
+      pd = k1 * (2.0 * xk_1 - xk - xk_2);
+      yk += pp + pi + pd;
     }
     else { 
-      heatspeed = pp = pi = pd = 0.0; 
+      yk = pp = pi = pd = 0.0; 
     }
     xk_2 = xk_1;
-    xk_1 = temp[0];
-    if (heatspeed > 100) {
-      heatspeed = 100;
+    xk_1 = xk;
+    if (yk > 100) {
+      yk = 100;
     }
-    else if (heatspeed < 0) {
-      heatspeed = 0;
+    else if (yk < 0) {
+      yk = 0;
     }
-    analogWrite(heatcontrol, (heatspeed * 255) / 100);
-    Serial.println(pp);
+    analogWrite(heatcontrol, (yk * 255) / 100);
   }
 }

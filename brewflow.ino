@@ -1,4 +1,3 @@
-
 /* 
  * This file is part of brewflow.
  * 
@@ -20,61 +19,38 @@
 #include <DallasTemperature.h>
 #include <avr/wdt.h>
 
-// Hardware setup
-// Uses Dallas library for one wire bus.
-// Uses 4 x DS1820B 2 for each tank. 1 top (mash) and 1 bottom (circulating).
-// Uses DFROBOT L298P 2A motor shield.
-// Uses 2 x SSR 40A for PID controlled PWM output to heaters MLT and HLT.
-// Beersmith 
+#define One_Wire_Bus (3)  // Termometer.
+#define pumpcontrol  (4)  // Pumpe styring.
+#define pumppwm      (5)  // Pumpe PWM.
+#define heatcontrol  (9)  // MLT PWM.
 
-#define One_Wire_Bus (3)  // Thermometers.
-#define pumpcontrol (4)  // Pump control.
-#define pumppwm     (5)  // Pump PWM.
-#define heatcontrol (9)  // MLT heater PWM.
+double kc = 1.2;  // Controller gain
+double ti = 2.5;  // Time constant for I action
+double td = 0.5;  // Time constant for D action
+double ts = 20;   // Sample time in seconds
+double k0, k1;
+double pp, pi, pd;
+double ek;
+double yk;
+double xk, xk_1, xk_2;
 
-//#define SECS_PER_MIN  (60UL)
-//#define SECS_PER_HOUR (3600UL)
-//#define SECS_PER_DAY  (SECS_PER_HOUR * 24L)
-//#define numberOfSeconds(_time_) (_time_ % SECS_PER_MIN)
-//#define numberOfMinutes(_time_) ((_time_ / SECS_PER_MIN) % SECS_PER_MIN)
-//#define numberOfHours(_time_) (( _time_% SECS_PER_DAY) / SECS_PER_HOUR)
-//#define elapsedDays(_time_) ( _time_ / SECS_PER_DAY)
-#define TWENTY_SECONDS (400)
-//#define TEN_SECONDS (200)
-//#define FIVE_SECONDS (100)
-//#define ONE_SECOND (20)
-#define T_50MSEC (50)
+byte pumpspeed; // ( 0 - 255 )
 
-static double  xk_1;
-static double  xk_2;
-
-double kc = 1.2, ti = 2.5, td = 0.5, ts = 20;
-double k0, k1, k2, k3, pp, pi, pd;
-double ek, ek_1, ek_2, yk_1, yk_2;
-
-// Controller settings
-
-// Steeptime - When does timer start
-// Temp sensing - Which sensor is used. Combination
-// Pump setting - Pump ventilation. Pumpduring steps
-
-byte pumpspeed; // ( 0 - 100% )
-
-int steptimer, mashintimer, step1timer, step2timer, step3timer, step4timer, mashouttimer = 1, boiltimer;          // (0 - 100 minutter)
+int steptimer, mashintimer, step1timer, step2timer, step3timer, step4timer, mashouttimer, boiltimer;          // (0 - 100 minutter)
 byte steptarget, mashintarget, step1target,step2target, step3target, step4target, mashouttarget, boiltarget;  // (0 - 110 grader)
-double heatspeed, temp[3];      // (Kan muligvis converteres til unsigned integer hvis der er behov)
+double heatspeed, temp[3];
 
-int temp_sens;
 byte debugtemp1, debugtemp2; // (0 - 255 degrees)
 byte step_x;
 
 boolean stringComplete = false;
 boolean ilock          = false;   // Water added switch.
 boolean mlock          = false;   // Grain added switch.
+boolean mashlock       = false;   // Mashout done.
 boolean vrg            = false;   // PID switch.
 boolean pumpstate     = false;   // Pump switch.
 
-int ticks, pumpvent, pumptimer, wspeed1;
+int pumpvent, pumptimer, wspeed1;
 String inputString = "", bbuf = "", cbuf = "";
 
 int lastupdatestatus;    // Holds time for when status was sent to webclient.
@@ -135,10 +111,8 @@ void loop(void) {
         steptimer = (millis()/1000) + (60 * step1timer);   // step 1        
         steptarget = step1target;       
         step_x = 3;
-        init_pid();
-        //vrg = 1;
         pumpstate = true;
-        wspeed1 = 60;
+        wspeed1 = 30;
       }   
     break; 
 
@@ -203,8 +177,8 @@ void loop(void) {
     break; 
 
       case 7: // Mash Out.
-      if (millis()/1000 < (steptimer)){
-      // Timer running
+      if (mashlock == false){
+      // Done mashout
       }
       else {
       // MashOut done, next Boil

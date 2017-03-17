@@ -339,7 +339,7 @@ void DebugT2() {
 // is received from Arduino.
 
 void SetReceipe() {
- 
+  receipe = 1;
   String mashintemp = str((int)MashInTemp);
   String step1temp = str((int)Step1Temp);
   String step2temp = str((int)Step2Temp);
@@ -420,11 +420,6 @@ void StartPump2() {
   myPort.write(pumpspeed);
   myPort.write(lf);
   delay(400);
-}
-
-void SteepSetting() {
-
-  label15.setText("Rise");
 }
 
 

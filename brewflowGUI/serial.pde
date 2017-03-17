@@ -1,13 +1,13 @@
-
+int receipe = 0;
 import processing.serial.*;
 
 Serial myPort; 
 
 int lf = 10, val;
-
+String statustext = "";
 void SerialPortSetup() {
 
-  myPort = new Serial(this, "COM1", 57600);
+  myPort = new Serial(this, "COM5", 57600);
   delay(50);
   myPort.clear();
 }
@@ -50,7 +50,7 @@ void serialEvent(Serial myPort) {
       label5.setText(int(intensity)+"%");
     } else {
       label5.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-      label5.setText("off");
+      label5.setText("  OFF");
     }
 
     if (pump1state == 1) {
@@ -58,7 +58,7 @@ void serialEvent(Serial myPort) {
       label12.setText(str(pump1speed)+"%");
     } else {
       label12.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-      label12.setText("off");
+      label12.setText("  OFF");
     }
 
     if (ilock == 1) {
@@ -68,7 +68,7 @@ void serialEvent(Serial myPort) {
       label21.setLocalColorScheme(GCScheme.RED_SCHEME);
       label21.setText("NO");
     }
-
+    
     if (mlock == 1) {
       label11.setLocalColorScheme(GCScheme.GREEN_SCHEME);
       label11.setText("OK");
@@ -76,8 +76,51 @@ void serialEvent(Serial myPort) {
       label11.setLocalColorScheme(GCScheme.RED_SCHEME);
       label11.setText("NO");
     }
+    
+    if (temp1/10 >= 0) {
+      label18.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+    } else {
+      label18.setLocalColorScheme(GCScheme.RED_SCHEME);
+    }
+
+    if (temp2/10 >= 0) {
+      label17.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+    } else {
+      label17.setLocalColorScheme(GCScheme.RED_SCHEME);
+    }
 
 
+
+    if  (step_x == 3) {   
+      statustext = "PID is 'ON'. Target is 'Step 1' temperature @ " + pidtarget + "°C" + "Timer is running, time left ";
+    }
+
+    if  (step_x == 2) {   
+      statustext = "'MashIn' temperature @ " + pidtarget + "°C is reached. Ready for MashIn. Add malt and continue.";
+    }
+
+    if  (step_x == 1) {   
+      statustext = "PID is 'ON'. Target is 'MashIn' temperature @ " + pidtarget + "°C";
+    
+    }
+   
+    
+    if (step_x == 0) { 
+       
+      statustext = "System is idle. PID is 'OFF'. Pump is 'OFF'. ";      
+    
+      if (ilock == 0) {
+      statustext += "Waiting for water. ";
+      }
+      
+      if (receipe == 0) {
+      statustext += "Waiting for Receipe. ";
+      }
+
+    }
+    
+    
+    label20.setText(statustext);     
     label1.setText(pidtarget+"°");      
     label3.setText(str(temp1/10)+"°"); 
     label6.setText(str(temp2/10)+"°");

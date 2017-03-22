@@ -7,7 +7,7 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.CYAN_SCHEME);
   G4P.setCursor(ARROW);
   if(frame != null)
-    frame.setTitle("brewflow v0.3");
+    surface.setTitle("brewflow v0.3");
 
   // STEEPTIME HANDLING
   //label2 = new GLabel(this, 286, 480, 60, 18);
@@ -66,10 +66,10 @@ public void createGUI(){
   label5.setOpaque(true);
   
   // DEBUG field for checking which step
-  label14 = new GLabel(this, 663, 120, 71, 18);
-  label14.setText("DEBUG");
-  label14.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  label14.setOpaque(true);
+  //label14 = new GLabel(this, 663, 120, 71, 18);
+  //label14.setText("DEBUG");
+  //label14.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  //label14.setOpaque(true);
   
   // TEMP 2
   //label3 = new GLabel(this, 536, 440, 60, 18);

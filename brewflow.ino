@@ -27,8 +27,8 @@
 double kc = 1.2;  // Controller gain
 double ti = 2.5;  // Time constant for I action
 double td = 0.5;  // Time constant for D action
-double ts = 20;   // Sample time in seconds
-double k0, k1;
+double ts = 10;   // Sample time in seconds
+double k0, k1; 
 double pp, pi, pd;
 double ek;
 double yk;
@@ -57,6 +57,7 @@ int lastupdatestatus;    // Holds time for when status was sent to webclient.
 int lastupdatesettings;  // Holds time for when settings was sent to webclient.
 int lastupdateui;        // Holds time for when UI received the last update.
 int lastupdatepid;       // Holds time for when PID received the last update.
+int lastupdatetempdata;       // Holds time for when PID received the last update.
 
 OneWire oneWire(One_Wire_Bus);
 DallasTemperature sensors(&oneWire);
@@ -72,6 +73,7 @@ void loop(void) {
   // update_timer;
   // update_graph;
   send_status(1);
+  send_tempdata(20);
   get_input();
   
   switch (step_x) {

@@ -298,15 +298,15 @@ public void VisKnapper() {
   cp5.getController("PumpSpeed2").getCaptionLabel().align(ControlP5.CENTER, ControlP5.LEFT_OUTSIDE).setPaddingX(0);
 }
 
-void Ilock() {
-  String ilock = "1";
+public void Ilock() {
+  String mlock = "1";
   myPort.write("9041");
-  myPort.write(ilock);
+  myPort.write(mlock);
   myPort.write(lf);
   delay(200);
 }
 
-void Mlock() {
+public void Mlock() {
   String mlock = "2";
   myPort.write("9042");
   myPort.write(mlock);
@@ -314,21 +314,21 @@ void Mlock() {
   delay(200);
 }
 
-void StartMash() {
+public void StartMash() {
 
   myPort.write("9050");
   myPort.write(lf);
   delay(200);
 }
 
-void DebugT1() {
+public void DebugT1() {
   String debugt1 = str((int)PumpSpeed1);
   myPort.write("2010");
   myPort.write(debugt1);
   myPort.write(lf);
 }
 
-void DebugT2() {
+public void DebugT2() {
   String debugt2 = str((int)PumpSpeed1);
   myPort.write("2020");
   myPort.write(debugt2);
@@ -338,7 +338,7 @@ void DebugT2() {
 // Event stop pump has been pressed. Event stops when pump stop
 // is received from Arduino.
 
-void SetReceipe() {
+public void SetReceipe() {
   receipe = 1;
   String mashintemp = str((int)MashInTemp);
   String step1temp = str((int)Step1Temp);
@@ -414,7 +414,7 @@ void SetReceipe() {
   delay(400);
 }
 
-void StartPump2() {
+public void StartPump2() {
   String pumpspeed = str((int)PumpSpeed2);
   myPort.write("9090");
   myPort.write(pumpspeed);
@@ -423,7 +423,7 @@ void StartPump2() {
 }
 
 
-void ResetController() {
+public void ResetController() {
   myPort.write("9999");
   myPort.write(0);
   myPort.write(lf);

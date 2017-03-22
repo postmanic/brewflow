@@ -28,13 +28,13 @@ void init_pid() {
 void update_pid() {
 
   xk = temp[0] = temp[1];
-  if (millis()/1000 >= (lastupdatepid + 20)){
+  if (millis()/1000 >= (lastupdatepid + 10)){
     lastupdatepid =  millis()/1000;
     ek = steptarget - xk;
     if (vrg){
       pp = kc * (xk_1 - xk);
-      pi = k0 * ek;
-      pd = k1 * (2.0 * xk_1 - xk - xk_2);
+      pi = k0 * ek;                               // k0 = 9.6 
+      pd = k1 * (2.0 * xk_1 - xk - xk_2);         // k1 = 0,03
       yk += pp + pi + pd;
     }
     else { 

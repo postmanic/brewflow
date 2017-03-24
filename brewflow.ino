@@ -40,7 +40,7 @@ int steptimer, mashintimer, step1timer, step2timer, step3timer, step4timer, mash
 byte steptarget, mashintarget, step1target,step2target, step3target, step4target, mashouttarget, boiltarget;  // (0 - 110 grader)
 double heatspeed, temp[3];
 
-byte debugtemp1, debugtemp2; // (0 - 255 degrees)
+double debugtemp1, debugtemp2; // (0 - 255 degrees)
 byte step_x;
 
 boolean stringComplete = false;
@@ -72,10 +72,10 @@ void loop(void) {
   update_pump();         // kun hvis der er et status skifte
   // update_timer;
   // update_graph;
-  send_status(1);
-  send_tempdata(20);
+  send_1010(1);
+  send_1012(20);
   get_input();
-  
+  debug(1);
   switch (step_x) {
 
     case 1: // MashIn

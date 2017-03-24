@@ -75,7 +75,6 @@ void get_input(){
         break;      
       case 9025:  // Set step timer to bbuf. 9015xx where xx is time in minutes. Boil
         boiltimer = bbuf_int;
-        send_settings();
         break;   
 
       //
@@ -84,9 +83,11 @@ void get_input(){
 
       case 2010:  // Indstilling af debug temp. Simulerer temp probe1
         debugtemp1 = bbuf_int;
+        debugtemp1 = debugtemp1 / 10;
         break;        
       case 2020:  // Indstilling af debug temp. Simulerer temp probe1
         debugtemp2 = bbuf_int;
+        debugtemp2 = debugtemp2 / 10;        
         break;  
 
       //

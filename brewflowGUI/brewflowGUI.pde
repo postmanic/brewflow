@@ -1,11 +1,14 @@
 float[] beerArray1 = { 0 };
 float[] beerArray2 = { 0 };
 float[] beerArray3 = { 0 };
-int PumpSpeed1 = 0;
+float PumpSpeed1 = 0;
 int PumpSpeed2 = 0;
 int PumpSpeed3 = 0;
 float temp_0, temp_1, temp_2;
 int updatestatus = 0, mashstep = 0, a = 0, pidtarget = 0;
+int yk = 0, ilock = 0, mlock = 0, vrg = 0, pumpstate = 0, pumpspeed = 0, step_x = 0, pidtimer = 0; 
+  
+  
   
 GPlot plot1, plot2, plot3;
 

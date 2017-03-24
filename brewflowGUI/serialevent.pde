@@ -1,5 +1,4 @@
 
-
 void serialEvent(Serial myPort) {
   try {
     String myString = myPort.readStringUntil(lf);
@@ -9,45 +8,42 @@ void serialEvent(Serial myPort) {
     switch(command) {
       
       case 1012:  
-        a++; 
-        temp_0   = int (myArray[3])/10; 
-        temp_1   = int (myArray[4])/10; 
-        temp_2   = int (myArray[5]);
-        updatestatus   = int (myArray[6]);   
-        beerArray1 = append(beerArray1, temp_0);
-        beerArray2 = append(beerArray2, temp_1);
-        beerArray3 = append(beerArray3, temp_2);
+
+        beerArray1     = append(beerArray1, temp_1/10);
+        beerArray2     = append(beerArray2, temp_2/10);
+        beerArray3     = append(beerArray3, yk);
       break;
       
       case 1010:
         // add reading to graf arrayList 
-        temp_0       = int (myArray[2]); 
-        temp_1   = int (myArray[3]); 
-        temp_2   = int (myArray[3]); 
-        int ilock     = int (myArray[4]);
-        int mlock     = int (myArray[5]);
-        int vrg       = int (myArray[6]);
-        int intensity = int (myArray[7]);
-        int pump1state = int (myArray[8]);
-        float pump1speed = int (myArray[9]);
-        int step_x = int (myArray[10]);    
-        updatestatus = int (myArray[13]);
-        pidtarget = int (myArray[11]);
-        int pidtimer = int (myArray[12]);
-       // label14.setText("Case "+int(step_x)+" " + updatestatus);
+        //temp_0        = int (myArray[2]); 
+        temp_1        = int (myArray[2]); 
+        temp_2        = int (myArray[3]); 
+        ilock         = int (myArray[4]);
+        mlock         = int (myArray[5]);
+        vrg           = int (myArray[6]);
+        yk            = int (myArray[7]);
+        pumpstate     = int (myArray[8]);
+        pumpspeed     = int (myArray[9]);
+        step_x        = int (myArray[10]); 
+        pidtarget     = int (myArray[11]);       
+        pidtimer      = int (myArray[12]);        
+        updatestatus  = int (myArray[13]);
+
+       //label14.setText("Case "+int(step_x)+" " + updatestatus);
         
         if (vrg > 0) {
           label5.setLocalColorScheme(GCScheme.RED_SCHEME);
-          label5.setText(int(intensity)+"%");
+          label5.setText((yk)+"%");
         }
         else {
           label5.setLocalColorScheme(GCScheme.BLUE_SCHEME);
           label5.setText("  OFF");
         }
 
-        if (pump1state == 1) {
+        if (pumpstate == 1) {
           label12.setLocalColorScheme(GCScheme.RED_SCHEME);
-          label12.setText(str(pump1speed)+"%");
+          label12.setText(str(pumpspeed)+"%");
         }
         else {
           label12.setLocalColorScheme(GCScheme.BLUE_SCHEME);
@@ -71,13 +67,13 @@ void serialEvent(Serial myPort) {
       label11.setText("NO");
     }
     
-    if (temp_1/10 >= 0) {
+    if (temp_1 >= 0) {
       label18.setLocalColorScheme(GCScheme.GREEN_SCHEME);
     } else {
       label18.setLocalColorScheme(GCScheme.RED_SCHEME);
     }
 
-    if (temp_2/10 >= 0) {
+    if (temp_2 >= 0) {
       label17.setLocalColorScheme(GCScheme.GREEN_SCHEME);
     } else {
       label17.setLocalColorScheme(GCScheme.RED_SCHEME);
@@ -116,8 +112,8 @@ void serialEvent(Serial myPort) {
     
     label20.setText(statustext);     
     label1.setText(pidtarget+"°");      
-    label3.setText(str(temp_0/10)+"°"); 
-    label6.setText(str(temp_1/10)+"°");
+    label3.setText(str(temp_1/10)+"°"); 
+    label6.setText(str(temp_2/10)+"°");
 
     break;
   }

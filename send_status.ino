@@ -19,7 +19,7 @@
 void send_tempdata(int tempupdate){
   if (millis()/1000 >= (lastupdatetempdata + tempupdate)){
     lastupdatetempdata =  millis()/1000;
-   int nop[] = {6, temp[0]*10, temp[1]*10, temp[2]*10, lastupdatestatus, lastupdatestatus}; 
+   int nop[] = {7, temp[0]*10, temp[1]*10, temp[2]*10, yk, lastupdatestatus, lastupdatestatus}; 
    send_data(1012, nop);
  
   }

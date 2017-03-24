@@ -10,11 +10,13 @@ void serialEvent(Serial myPort) {
       
       case 1012:  
         a++; 
-        temp_0   = int (myArray[2])/10; 
-        temp_1   = int (myArray[3])/10; 
-        temp_2   = int (myArray[3])/10;
-        updatestatus   = int (myArray[5]);   
-        beerArray = append(beerArray, temp_0);
+        temp_0   = int (myArray[3])/10; 
+        temp_1   = int (myArray[4])/10; 
+        temp_2   = int (myArray[5]);
+        updatestatus   = int (myArray[6]);   
+        beerArray1 = append(beerArray1, temp_0);
+        beerArray2 = append(beerArray2, temp_1);
+        beerArray3 = append(beerArray3, temp_2);
       break;
       
       case 1010:
@@ -30,7 +32,7 @@ void serialEvent(Serial myPort) {
         float pump1speed = int (myArray[9]);
         int step_x = int (myArray[10]);    
         updatestatus = int (myArray[13]);
-        int pidtarget = int (myArray[11]);
+        pidtarget = int (myArray[11]);
         int pidtimer = int (myArray[12]);
        // label14.setText("Case "+int(step_x)+" " + updatestatus);
         

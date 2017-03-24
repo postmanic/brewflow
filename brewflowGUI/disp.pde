@@ -151,24 +151,24 @@ public void VisKnapper() {
     ;  
 
   // create a new button with name 'buttonA'
-  // cp5.addButton("StartPump1")
-  //    .setValue(0)
-  //   .setPosition(410,185)
-  //   .setCaptionLabel("Run")
-  //   .setSize(40,15)
-  //  .getCaptionLabel().align(CENTER,CENTER)
-  //  ;     
+   cp5.addButton("StartPump")
+      .setValue(0)
+     .setPosition(454,159)
+     .setCaptionLabel("Start")
+     .setSize(40,15)
+    .getCaptionLabel().align(CENTER,CENTER)
+    ;     
 
    //create a new button with name 'buttonA'
    cp5.addButton("StopPump")
     .setValue(0)
-    .setPosition(454,159)
+    .setPosition(499,159)
     .setCaptionLabel("Stop")
     .setSize(40,15)
     .getCaptionLabel().align(CENTER,CENTER)
     ;
 
-  cp5.addButton("StartPump2")
+  cp5.addButton("SetPump")
     .setValue(0)
     .setPosition(410, 159)
     .setCaptionLabel("Set")
@@ -414,7 +414,23 @@ public void SetReceipe() {
   delay(400);
 }
 
-public void StartPump2() {
+public void StopPump() {
+  String pumpspeed = "0";
+  myPort.write("9090");
+  myPort.write(pumpspeed);
+  myPort.write(lf);
+  delay(400);
+}
+
+public void StartPump() {
+  String pumpspeed = str((int)PumpSpeed2);
+  myPort.write("9090");
+  myPort.write(pumpspeed);
+  myPort.write(lf);
+  delay(400);
+}
+
+public void SetPump() {
   String pumpspeed = str((int)PumpSpeed2);
   myPort.write("9090");
   myPort.write(pumpspeed);

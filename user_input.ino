@@ -95,12 +95,12 @@ void get_input(){
       //
 
       case 9041:  // Bruger bekræfter at der er påfyldt vand. ilock kan kun sættes fra initialisering.
-        if (bbuf_int == 1 && ilock == false && step_x == 0){
+        if (bbuf_int == 1 && !ilock && step_x == 0){
           ilock = true;
         }
         break;
       case 9042:  // User acknowledges that there is water in tank. No water will damage equipment
-        if (bbuf_int == 2 && step_x == 2 && ilock == true){
+        if (bbuf_int == 2 && step_x == 2 && ilock){
           mlock = true;
         }
         break;

@@ -42,27 +42,22 @@ void send_1011(int tempupdate){
   }
 }
 
-void send_setup(int tempupdate){
-  //int nop[] = {2, 2};
-  //send_data(1012, nop);
-}
-
-void debug(int tempupdate){
+void send_debug(int tempupdate){
   static int lastupdate;
   if (millis()/1000 >= (lastupdate + tempupdate)){
    lastupdate =  millis()/1000;
-   Serial.print ("TEMP 0:");
-   Serial.println (temp[0]);
-   Serial.print ("TEMP 1:");
-   Serial.println (temp[1]);
-   Serial.print ("TEMP 2:");
+   Serial.print ("TEMP 0: ");
+   Serial.print (temp[0]);
+   Serial.print (" TEMP 1: ");
+   Serial.print (temp[1]);
+   Serial.print (" TEMP 2: ");
    Serial.println (temp[2]);
-   Serial.print ("YK:");
-   Serial.println (yk);
-   Serial.print ("PP:");
-   Serial.println (pp);
-   Serial.print ("PI:");
-   Serial.println (pi);
+   Serial.print ("YK: ");
+   Serial.print (yk);
+   Serial.print (" PP: ");
+   Serial.print (pp);
+   Serial.print (" PI: ");
+   Serial.print (pi);
    Serial.print ("PD:");
    Serial.println (pd);
 }  }

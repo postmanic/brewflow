@@ -48,7 +48,8 @@ boolean ilock          = false;   // Water added switch.
 boolean mlock          = false;   // Grain added switch.
 boolean mashlock       = false;   // Mashout done.
 boolean vrg            = false;   // PID switch.
-boolean pumpstate     = false;   // Pump switch.
+boolean pumpstate      = false;   // Pump switch.
+boolean debug          = true;   // debug flag
 
 int pumpvent, pumptimer, wspeed1;
 String inputString = "", bbuf = "", cbuf = "";
@@ -75,7 +76,9 @@ void loop(void) {
   send_1010(1);
   send_1012(20);
   get_input();
-  debug(1);
+  if (debug){
+    send_debug(1);
+  }
   switch (step_x) {
 
     case 1: // MashIn

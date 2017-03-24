@@ -29,10 +29,15 @@ void setup() {
   sensors.begin();
   sensors.setResolution(T1, 11); // 375 ms
   sensors.setResolution(T2, 11);
+  if (debug){
+  Serial.print("Running in debug mode");
+  }
+  else {
   Serial.print("Found ");
   Serial.print(sensors.getDeviceCount(), DEC);
   Serial.println(" devices.");
- 
+  }
+  
   analogReference(EXTERNAL);
   
   pinMode(heatcontrol, OUTPUT);

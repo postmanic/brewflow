@@ -14,33 +14,52 @@
  * You should have received a copy of the GNU General Public License
  * along with brewflow.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+ 
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <LiquidCrystal.h>
 #include <avr/wdt.h>
 
-#define One_Wire_Bus (3)  // Termometer.
-#define pumpcontrol  (4)  // Pumpe styring.
-#define pumppwm      (5)  // Pumpe PWM.
-#define heatcontrol  (9)  // MLT PWM.
+#define btnRIGHT 0
+#define btnUP 1
+#define btnDOWN 2
+#define btnLEFT 3
+#define btnSELECT 4
+#define btnNONE 5
+#define TI 2.5
+#define KC 1.2
+#define TD 0.5
+#define TS 20
+#define bfVersion 0.3
 
-double kc = 1.2;  // Controller gain
-double ti = 2.5;  // Time constant for I action
-double td = 0.5;  // Time constant for D action
-double ts = 10;   // Sample time in seconds
-double k0, k1; 
-double pp, pi, pd;
-double ek;
-double yk;
-double xk, xk_1, xk_2;
+#define One_Wire_Bus 3
+#define pump1ctrl 4
+#define pump1pwm 5
+#define pump2ctrl 7
+#define pump2pwm 6
+#define heatcontrol 9
+#define LCD_DB4 8
+#define LCD_DB5 2
+#define LCD_DB6 10
+#define LCD_DB7 11
+#define LCD_RS 12
+#define LCD_EN 13
+#define KPAD_AN 0
 
+LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_DB4, LCD_DB5, LCD_DB6, LCD_DB7);
+
+int lcd_key = 0;
+int adc_key_in = 0;
+ 
 byte pumpspeed; // ( 0 - 255 )
 
 int steptimer, mashintimer, step1timer, step2timer, step3timer, step4timer, mashouttimer, boiltimer;          // (0 - 100 minutter)
-byte steptarget, mashintarget, step1target,step2target, step3target, step4target, mashouttarget, boiltarget;  // (0 - 110 grader)
-double heatspeed, temp[3];
+byte steptarget, mashintarget, step1target, step2target, step3target, step4target, mashouttarget, boiltarget;  // (0.0 - 110.0 grader)
+double temp[3];
 
-double debugtemp1, debugtemp2; // (0 - 255 degrees)
+double yk;
+
+float debugtemp1, debugtemp2; // (0.0 - 255.0 degrees)
 byte step_x;
 
 boolean stringComplete = false;
@@ -49,16 +68,10 @@ boolean mlock          = false;   // Grain added switch.
 boolean mashlock       = false;   // Mashout done.
 boolean vrg            = false;   // PID switch.
 boolean pumpstate      = false;   // Pump switch.
-boolean debug          = true;   // debug flag
+boolean debug          = true;    // debug flag
 
 int pumpvent, pumptimer, wspeed1;
 String inputString = "", bbuf = "", cbuf = "";
-
-int lastupdatestatus;    // Holds time for when status was sent to webclient.
-int lastupdatesettings;  // Holds time for when settings was sent to webclient.
-int lastupdateui;        // Holds time for when UI received the last update.
-int lastupdatepid;       // Holds time for when PID received the last update.
-int lastupdatetempdata;       // Holds time for when PID received the last update.
 
 OneWire oneWire(One_Wire_Bus);
 DallasTemperature sensors(&oneWire);
@@ -67,18 +80,21 @@ DeviceAddress T2 = { 0x28, 0xFF, 0x69, 0x15, 0x06, 0x00, 0x00, 0xC2 };
 
 
 void loop(void) {
-   
-  update_temperatures(); // altid da 
-  update_pid();          // kun hvis VRG er aktiv
-  update_pump();         // kun hvis der er et status skifte
-  // update_timer;
-  // update_graph;
+
+ lcd_key = read_LCD_buttons();  // read the buttons
+  
+  update_temperatures();
+  update_pid(steptarget, temp[0], vrg);
+  update_pump();
+  update_display();
   send_1010(1);
-  send_1012(20);
+  send_1012(TS);
   get_input();
+
   if (debug){
-    send_debug(1);
+    send_debug(5);
   }
+
   switch (step_x) {
 
     case 1: // MashIn
@@ -100,7 +116,7 @@ void loop(void) {
         }
       }
       
-      if (temp[0] >= mashintarget && step_x == 1 && ilock == true && pumpvent == 2){
+      if (temp[0] >= steptarget && ilock == true && pumpvent == 2){
         step_x = 2;
       }
     break; 
@@ -186,7 +202,7 @@ void loop(void) {
       // Done mashout
       }
       else {
-      // MashOut done, next Boil
+      // MashOut done, next start boil
       step_x = 8;      
       steptimer = millis()/1000 + (60 * boiltimer);
       steptarget = boiltarget;     

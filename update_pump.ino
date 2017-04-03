@@ -8,12 +8,12 @@ void update_pump(){
   }
     
   if (pumpstate == 1) {    
-    digitalWrite(pumpcontrol, LOW);    
-    analogWrite(pumppwm, pumpspeed);
+    digitalWrite(pump1ctrl, LOW);    
+    analogWrite(pump1pwm, pumpspeed);
   }
   else {
-    digitalWrite(pumpcontrol, LOW);
-    analogWrite(pumppwm, 0);
+    digitalWrite(pump1ctrl, LOW);
+    analogWrite(pump1pwm, 0);
 
   } 
 }

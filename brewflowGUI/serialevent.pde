@@ -9,8 +9,8 @@ void serialEvent(Serial myPort) {
       
       case 1012:  
 
-        beerArray1     = append(beerArray1, temp_1/10);
-        beerArray2     = append(beerArray2, temp_2/10);
+        beerArray1     = append(beerArray1, temp_1/100);
+        beerArray2     = append(beerArray2, temp_2/100);
         beerArray3     = append(beerArray3, yk);
       break;
       
@@ -112,8 +112,8 @@ void serialEvent(Serial myPort) {
     
     label20.setText(statustext);     
     label1.setText(pidtarget+"°");      
-    label3.setText(str(temp_1/10)+"°"); 
-    label6.setText(str(temp_2/10)+"°");
+    label3.setText(str(temp_1/100)+"°"); 
+    label6.setText(str(temp_2/100)+"°");
 
     break;
   }

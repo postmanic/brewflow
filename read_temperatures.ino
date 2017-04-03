@@ -15,17 +15,16 @@
  * along with brewflow.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
 // Needs more elegant control of sensors
 
 void update_temperatures(){
   sensors.requestTemperatures();
-  temp[1] = sensors.getTempC(T1);
+  temp[1] = temp[0] = sensors.getTempC(T1);
   delay(2);
   temp[2] = sensors.getTempC(T2);
   delay(2);
   if (debug){
+    temp[0] = debugtemp1;
     temp[1] = debugtemp1; 
     temp[2] = debugtemp2;
   }

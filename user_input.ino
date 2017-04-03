@@ -83,11 +83,11 @@ void get_input(){
 
       case 2010:  // Indstilling af debug temp. Simulerer temp probe1
         debugtemp1 = bbuf_int;
-        debugtemp1 = debugtemp1 / 10;
+        debugtemp1 = debugtemp1 / 100;
         break;        
       case 2020:  // Indstilling af debug temp. Simulerer temp probe1
         debugtemp2 = bbuf_int;
-        debugtemp2 = debugtemp2 / 10;        
+        debugtemp2 = debugtemp2 / 100;        
         break;  
 
       //
@@ -104,13 +104,29 @@ void get_input(){
           mlock = true;
         }
         break;
-
+      case 9050:  // User acknowledges that there is water in tank. No water will damage equipment
+        if (step_x == 7 && ilock){
+          mashlock = true;
+        }
+        break;
       //
       // Manuel control of system
       //
       
       case 9090: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
         wspeed1 = bbuf_int;
+        update_pump();        
+      break; 
+      
+      case 9092: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
+        wspeed1 = bbuf_int;
+        pumpstate = 0;
+        update_pump();        
+      break; 
+
+      case 9095: // Hvis der tilsat vand og Mash In temp er indtastet bliver menu sat til 1 
+        wspeed1 = bbuf_int;
+        pumpstate = 1;
         update_pump();        
       break; 
 

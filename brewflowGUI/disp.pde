@@ -322,14 +322,14 @@ public void StartMash() {
 }
 
 public void DebugT1() {
-  String debugt1 = str(PumpSpeed1*10);
+  String debugt1 = str(PumpSpeed1*100);
   myPort.write("2010");
   myPort.write(debugt1);
   myPort.write(lf);
 }
 
 public void DebugT2() {
-  String debugt2 = str(PumpSpeed1*10);
+  String debugt2 = str(PumpSpeed1*100);
   myPort.write("2020");
   myPort.write(debugt2);
   myPort.write(lf);

@@ -21,27 +21,43 @@
 
 void setup() { 
 
-  init_pid();
   //wdt_enable(WDTO_8S); // Safety first
 
-  Serial.begin(57600);
- 
+ Serial.begin(57600);
+ lcd.begin(16, 2);              // start the library
+ lcd.setCursor(2,0);
+ lcd.print("brewflow 0.3"); // print a simple message
+  delay(2000);
   sensors.begin();
   sensors.setResolution(T1, 11); // 375 ms
   sensors.setResolution(T2, 11);
   if (debug){
-  Serial.print("Running in debug mode");
+  Serial.print("Debug mode");
+  lcd.clear();
+  lcd.setCursor(2,0);
+  lcd.print("Debug mode");
+  delay(2000);
+  
   }
   else {
   Serial.print("Found ");
   Serial.print(sensors.getDeviceCount(), DEC);
   Serial.println(" devices.");
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Found ");
+  lcd.print(sensors.getDeviceCount(), DEC); 
+  lcd.print(" devices");
+  delay(2000);
+
+
+  
   }
   
   analogReference(EXTERNAL);
   
   pinMode(heatcontrol, OUTPUT);
-  pinMode(pumpcontrol, OUTPUT);
+  pinMode(pump1ctrl, OUTPUT);
   
   analogWrite(heatcontrol, LOW);
   

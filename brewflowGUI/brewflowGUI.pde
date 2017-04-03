@@ -53,7 +53,7 @@ void draw() {
   plot1.drawXAxis();
   plot1.drawYAxis();
   plot1.drawTitle();
-  //plot1.drawPoints();
+  plot1.drawPoints();
   plot1.drawGridLines(GPlot.BOTH);
   plot1.drawLines(); 
   //plot1.drawHorizontalLine(pidtarget, color(255, 0, 255), 1);
@@ -66,7 +66,7 @@ void draw() {
   //plot2.drawXAxis();
   //plot2.drawYAxis();
   //plot2.drawTitle();
-  //plot1.drawPoints();
+  plot2.drawPoints();
   //plot2.drawGridLines(GPlot.BOTH);
   plot2.drawLines(); 
   //plot2.drawLabels();
@@ -78,7 +78,7 @@ void draw() {
   //plot2.drawXAxis();
   //plot2.drawYAxis();
   //plot2.drawTitle();
-  //plot1.drawPoints();
+  plot3.drawPoints();
   //plot2.drawGridLines(GPlot.BOTH);
   plot3.drawLines(); 
   //plot2.drawLabels();

@@ -20,7 +20,7 @@ void send_1012(int tempupdate){
   static int lastupdate;
   if (millis()/1000 >= (lastupdate + tempupdate)){
     lastupdate =  millis()/1000;
-    int nop[] = {7, temp[0]*10, temp[1]*10, temp[2]*10, yk, lastupdate, lastupdate}; 
+    int nop[] = {6, (int)temp[0]*100, (int)temp[1]*100, (int)temp[2]*100, lastupdate, lastupdate}; 
     send_data(1012, nop);
   }
 }
@@ -29,7 +29,7 @@ void send_1010(int tempupdate){
   static int lastupdate;
   if (millis()/1000 >= (lastupdate + tempupdate)){
     lastupdate =  millis()/1000;
-    int nop[] = {14, temp[1]*10, temp[2]*10, ilock, mlock, vrg, yk, pumpstate, wspeed1, step_x, steptarget, steptimer, lastupdate, lastupdate}; 
+    int nop[] = {13, temp[1]*100, temp[2]*100, ilock, mlock, vrg, yk, pumpstate, wspeed1, step_x, steptarget, steptimer, lastupdate, lastupdate}; 
     send_data(1010, nop);
   }
 }
@@ -46,18 +46,5 @@ void send_debug(int tempupdate){
   static int lastupdate;
   if (millis()/1000 >= (lastupdate + tempupdate)){
    lastupdate =  millis()/1000;
-   Serial.print ("TEMP 0: ");
-   Serial.print (temp[0]);
-   Serial.print (" TEMP 1: ");
-   Serial.print (temp[1]);
-   Serial.print (" TEMP 2: ");
-   Serial.println (temp[2]);
-   Serial.print ("YK: ");
-   Serial.print (yk);
-   Serial.print (" PP: ");
-   Serial.print (pp);
-   Serial.print (" PI: ");
-   Serial.print (pi);
-   Serial.print ("PD:");
-   Serial.println (pd);
+
 }  }

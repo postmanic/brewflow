@@ -20,7 +20,7 @@ void send_1012(int tempupdate){
   static int lastupdate;
   if (millis()/1000 >= (lastupdate + tempupdate)){
     lastupdate =  millis()/1000;
-    int nop[] = {6, (int)temp[0]*100, (int)temp[1]*100, (int)temp[2]*100, lastupdate, lastupdate}; 
+    int nop[] = {6, (int)temp[0]*10, (int)temp[1]*10, (int)temp[2]*10, lastupdate, lastupdate}; 
     send_data(1012, nop);
   }
 }
@@ -29,7 +29,7 @@ void send_1010(int tempupdate){
   static int lastupdate;
   if (millis()/1000 >= (lastupdate + tempupdate)){
     lastupdate =  millis()/1000;
-    int nop[] = {13, temp[1]*100, temp[2]*100, ilock, mlock, vrg, yk, pumpstate, wspeed1, step_x, steptarget, steptimer, lastupdate, lastupdate}; 
+    int nop[] = {13, temp[1]*10, temp[2]*10, ilock, mlock, vrg, yk, pumpstate, wspeed1, step_x, steptarget, steptimer, lastupdate, lastupdate}; 
     send_data(1010, nop);
   }
 }

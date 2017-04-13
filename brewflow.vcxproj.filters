@@ -16,24 +16,61 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="brewflow.ino" />
-    <None Include="class_display.ino" />
-    <None Include="read_temperatures.ino" />
     <None Include="send_status.ino" />
-    <None Include="setup.ino" />
     <None Include="subs.ino" />
     <None Include="update_display.ino" />
-    <None Include="update_pid.ino" />
     <None Include="update_pump.ino" />
     <None Include="update_ui.ino" />
     <None Include="user_input.ino" />
+    <None Include="class_dallasTemperatures.ino" />
+    <None Include="class_lcdDisplay.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.brewflow.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="__vm\.brewflow - Kopi.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Link.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temperatures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="brewflow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="display.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lcdDisplay.cpp">
+    <ClCompile Include="brewflow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="link.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Temperatures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
